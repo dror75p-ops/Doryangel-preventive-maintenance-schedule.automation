@@ -1675,14 +1675,21 @@ function scrollToForm() {
 
 // ── Form submit ──
 function handleSubmit() {
-  const fname  = document.getElementById('fname').value.trim();
-  const femail = document.getElementById('femail').value.trim();
+  const fname    = document.getElementById('fname').value.trim();
+  const femail   = document.getElementById('femail').value.trim();
+  const faddress = document.getElementById('faddress').value.trim();
   if (!fname)  { shakeFocus('fname');  return; }
   if (!femail || !femail.includes('@')) { shakeFocus('femail'); return; }
   const btn = document.getElementById('cta-btn');
   btn.disabled = true;
   btn.textContent = 'Unlocking...';
-  setTimeout(() => { unlockAll(); showSuccess(); showToast(); }, 900);
+  fetch('https://hook.eu1.make.com/tqmgkkgubkr409v3ygd4ohpmxpvx8iw2', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ fname, femail, faddress })
+  })
+  .catch(() => {}) // show success even if network blips
+  .finally(() => { unlockAll(); showSuccess(); showToast(); });
 }
 
 function shakeFocus(id) {
