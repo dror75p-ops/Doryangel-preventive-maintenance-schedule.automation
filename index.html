@@ -1597,16 +1597,134 @@ footer a:hover { text-decoration: underline; }
 </footer>
 
 <script>
-// Days left in May
-(function(){
-  const now = new Date();
-  const endOfMay = new Date(now.getFullYear(), 4, 31); // May 31
-  const diff = Math.ceil((endOfMay - now) / (1000*60*60*24));
-  const el = document.getElementById('days-left');
-  if(el) el.textContent = Math.max(diff, 1);
-})();
+// ── Month data ──
+const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MONTH_IDS   = ['mc-jan','mc-feb','mc-mar','mc-apr','mc-may','mc-jun','mc-jul','mc-aug','mc-sep','mc-oct','mc-nov','mc-dec'];
+const HPD_COUNTS  = [2,1,1,1,2,1,1,1,1,2,1,1];
 
-// Sticky mobile CTA — show after user scrolls past form
+const MONTH_TASKS = [
+  [{dot:'r',name:'Heat Compliance Check',tag:'r',tl:'HPD',why:'Heat must reach 68°F when outdoor temp drops below 55°F (6am–10pm). Violations trigger $250–$500/day fines.'},
+   {dot:'a',name:'Boiler Annual Inspection',tag:'a',tl:'Seasonal',why:'NYC requires annual boiler inspection. File report with DOB. Expired certificate = stop-work orders.'},
+   {dot:'g',name:'Hallway Lighting Audit',tag:'g',tl:'Routine',why:'All common areas must maintain minimum 10 footcandles. Replace burnt-out bulbs before annual inspection.'},
+   {dot:'r',name:'Window Guard Reminder Letters',tag:'r',tl:'HPD',why:'Annual window guard forms due to all tenants with children under 11. Penalty up to $5,000 per unit.'}],
+  [{dot:'r',name:'Lead Paint Annual Notice',tag:'r',tl:'HPD',why:'Deliver Annual Lead Paint Disclosure to all tenants by Feb 1. Buildings pre-1960 with children under 6 require full inspection.'},
+   {dot:'a',name:'Pipe Insulation Inspection',tag:'a',tl:'Seasonal',why:'Inspect all exposed pipes in unheated spaces. A single burst pipe in a Bronx building averages $8,000–$15,000 in damage.'},
+   {dot:'g',name:'HVAC Filter Replacement',tag:'g',tl:'Routine',why:'Replace all unit filters. Dirty filters reduce efficiency by 15% and increase tenant complaints.'}],
+  [{dot:'r',name:'Heat Season Wind-Down',tag:'r',tl:'HPD',why:'Heating season ends May 31. Document final boiler readings and schedule maintenance before summer shutdown.'},
+   {dot:'a',name:'Post-Winter Roof Inspection',tag:'a',tl:'Seasonal',why:'Check for ice-dam damage, ponding, and failed flashing. Catch issues before spring rains compound them.'},
+   {dot:'g',name:'Quarterly Extermination',tag:'g',tl:'Routine',why:'NYC Local Law 55 requires annual extermination documentation. Quarterly service keeps HPD at bay.'},
+   {dot:'g',name:'Lease Renewal Audit',tag:'g',tl:'Routine',why:'Flag leases expiring in summer. Issue 90-day renewal notices on time to avoid vacancy gaps.'}],
+  [{dot:'r',name:'DHCR Annual Registration',tag:'r',tl:'HPD',why:'Rent-stabilized units must be registered with DHCR by April 1 each year. Late filing freezes your right to raise rents.'},
+   {dot:'a',name:'Facade / Parapet Inspection',tag:'a',tl:'Seasonal',why:'Buildings over 6 stories require FISP filing every 5 years. Inspect annually for proactive safety.'},
+   {dot:'g',name:'Smoke & CO Detector Audit',tag:'g',tl:'Routine',why:'Test all units. NYC law requires working detectors in every bedroom, outside sleeping areas, and on every floor.'},
+   {dot:'g',name:'Common Area Deep Clean',tag:'g',tl:'Routine',why:'Spring clean lobbies, hallways, laundry rooms. Sets tenant expectations and reduces HPD complaint filings.'}],
+  [{dot:'r',name:'AC Window Guard Compliance',tag:'r',tl:'HPD',why:'Ensure all AC units in windows have approved brackets. HPD issues Class B violations corrected within 30 days — up to $500 per unit.'},
+   {dot:'r',name:'HPD Annual Inspection Prep',tag:'r',tl:'HPD',why:'Audit all open violations before HPD schedules its visit. Each unresolved violation increases your AEP risk score and triggers more frequent inspections.'},
+   {dot:'a',name:'Cooling System Start-Up',tag:'a',tl:'Seasonal',why:'Test central AC or PTAC units before summer heat arrives. Emergency service calls in July cost 3× more than spring prep — and tenant complaints spike fast.'},
+   {dot:'g',name:'Fire Escape Inspection',tag:'g',tl:'Routine',why:'NYC FDNY requires annual inspection of all fire escapes. Obstructed or deteriorated escapes carry penalties up to $25,000 and potential criminal liability.'}],
+  [{dot:'r',name:'Heat Season Officially Ends',tag:'r',tl:'HPD',why:'May 31 is the official end of heating season. Shut down boiler per maintenance schedule and document.'},
+   {dot:'a',name:'Exterior Paint & Masonry Review',tag:'a',tl:'Seasonal',why:'Assess façade for spalling, cracks, peeling paint. Local Law 196 scaffold inspections require advance scheduling.'},
+   {dot:'g',name:'Tenant Satisfaction Survey',tag:'g',tl:'Routine',why:'Proactive outreach reduces formal complaints. Tenants who feel heard file 60% fewer HPD service requests.'},
+   {dot:'g',name:'Plumbing Visual Inspection',tag:'g',tl:'Routine',why:'Check all supply lines, shutoffs, and drain cleanouts. Catch slow leaks before they become mold violations.'}],
+  [{dot:'r',name:'DOB Open Violation Audit',tag:'r',tl:'HPD',why:'Pull your BIS report and ECB filings. Unresolved violations accrue daily penalties and block refinancing.'},
+   {dot:'a',name:'Cooling System Load Check',tag:'a',tl:'Seasonal',why:'Verify PTAC units and central systems can handle peak load. NYC heat waves trigger tenant 311 calls within 24 hours.'},
+   {dot:'g',name:'Elevator Certificate Renewal',tag:'g',tl:'Routine',why:'Annual elevator inspection due. Post current certificate visibly. Lapsed certification = immediate shutdown order.'},
+   {dot:'g',name:'Mid-Year Insurance Review',tag:'g',tl:'Routine',why:'Confirm COI is current and coverage reflects capital improvements. Gaps discovered during a claim cost 10× more.'}],
+  [{dot:'r',name:'Water Meter & Backflow Inspection',tag:'r',tl:'HPD',why:'NYC DEP requires annual backflow prevention device testing. File test report within 30 days of due date or face fines.'},
+   {dot:'a',name:'Quarterly Extermination',tag:'a',tl:'Seasonal',why:'Peak rodent season in NYC. Proactive treatment costs $150–$300 vs. $3,000+ for infestations requiring HPD clearance.'},
+   {dot:'g',name:'Next-Year Budget Planning',tag:'g',tl:'Routine',why:'Start capital expense planning 6 months out. Boiler replacements, roof work, and FISP filings require lead time.'}],
+  [{dot:'r',name:'Heat Season Pre-Start Audit',tag:'r',tl:'HPD',why:'Heat season begins Oct 1. Violations issued from day one. Test system in September — no exceptions.'},
+   {dot:'a',name:'Boiler Start-Up Service',tag:'a',tl:'Seasonal',why:'Schedule licensed boiler technician. Verify combustion efficiency, safety controls, and pressure relief valves.'},
+   {dot:'a',name:'Weatherization & Draft Sealing',tag:'a',tl:'Seasonal',why:'Seal windows, doors, and penetrations. Every $1 spent on weatherization reduces heating costs by $3–$7.'},
+   {dot:'g',name:'Roof Drain Cleaning',tag:'g',tl:'Routine',why:'Clear debris before fall rains. Blocked drains cause ponding and accelerate membrane deterioration by 5–8 years.'}],
+  [{dot:'r',name:'Heat Season Begins — Oct 1',tag:'r',tl:'HPD',why:'68°F daytime / 55°F nighttime minimums begin today. Log daily temps. Document any supply failures within 1 hour.'},
+   {dot:'r',name:'Annual Fire Safety Filing',tag:'r',tl:'HPD',why:'Submit FDNY Annual Fire Safety Inspection Report for buildings with 3+ stories. Failure = Class 1 violation.'},
+   {dot:'a',name:'Fall Extermination Service',tag:'a',tl:'Seasonal',why:'Rodents seek warmth in October. Treat all entry points and basements before infestations establish.'},
+   {dot:'g',name:'Common Area Light Fixtures',tag:'g',tl:'Routine',why:'Transition to winter lighting schedule. HPD requires adequate illumination in all public areas at all times.'}],
+  [{dot:'r',name:'Window Guard Annual Report',tag:'r',tl:'HPD',why:'Submit HPD Window Guard Annual Report. Buildings with 10+ units must file by Dec 31 or face per-unit penalties.'},
+   {dot:'a',name:'Sidewalk Inspection & Repair',tag:'a',tl:'Seasonal',why:'NYC holds property owners liable for sidewalk defects. File for repairs before winter frost expands cracks.'},
+   {dot:'g',name:'Lease Renewal Follow-Up',tag:'g',tl:'Routine',why:'Check all January–March lease renewals. Missing a 60-day notice window triggers automatic month-to-month.'},
+   {dot:'g',name:'Vendor Contract Reviews',tag:'g',tl:'Routine',why:'Review maintenance, extermination, and elevator contracts. Renegotiate pricing for the coming year.'}],
+  [{dot:'r',name:'Year-End Compliance Audit',tag:'r',tl:'HPD',why:'Pull all HPD, DOB, and ECB violation reports. Resolve Class B and C violations before new year to reset your risk profile.'},
+   {dot:'a',name:'Snow Removal Contract & Plan',tag:'a',tl:'Seasonal',why:'NYC requires snow removal within 4 hours of daytime snowfall. No contract = personal liability for slip-and-fall claims.'},
+   {dot:'g',name:'Capital Improvement Plan Final',tag:'g',tl:'Routine',why:'Lock in next year\'s capex budget, contractor bids, and permit timelines. Capital improvements require 90+ days lead time.'},
+   {dot:'g',name:'Tenant Year-End Communication',tag:'g',tl:'Routine',why:'Send annual notice with updated contact info, emergency procedures, and recycling reminders. Reduces 311 calls.'}]
+];
+
+// ── Auto-detect current month and update all page text ──
+function initCurrentMonth() {
+  const now      = new Date();
+  const mi       = now.getMonth();
+  const year     = now.getFullYear();
+  const name     = MONTH_NAMES[mi];
+  const nextName = MONTH_NAMES[(mi + 1) % 12];
+  const lastDay  = new Date(year, mi + 1, 0).getDate();
+  const daysLeft = Math.max(lastDay - now.getDate() + 1, 1);
+
+  // Swap current/unlocked from the hardcoded May card to the real current month
+  if (mi !== 4) {
+    const mayCard = document.getElementById('mc-may');
+    mayCard.classList.remove('current', 'unlocked');
+    const mayList = mayCard.querySelector('.task-list');
+    if (mayList) mayList.style.display = 'none';
+    const mayStreak = mayCard.querySelector('.mc-streak');
+    if (mayStreak) mayStreak.style.display = '';
+
+    const cur = document.getElementById(MONTH_IDS[mi]);
+    if (cur) {
+      cur.classList.add('current', 'unlocked');
+      const la = cur.querySelector('.locked-area');
+      if (la) la.style.display = 'none';
+      const tl = cur.querySelector('.task-list');
+      if (tl) tl.style.display = 'block';
+    }
+
+    // Preview section
+    const eyebrow = document.querySelector('.may-preview-eyebrow');
+    if (eyebrow) eyebrow.innerHTML = '<span class="current-dot"></span> ' + name + ' ' + year + ' — Your Current Month';
+    const title = document.querySelector('.may-preview-title');
+    if (title) title.textContent = 'Your Property Maintenance Checklist for ' + name;
+    const sub = document.querySelector('.may-preview-sub');
+    if (sub) sub.textContent = 'These ' + MONTH_TASKS[mi].length + ' tasks are due this month for every Bronx landlord. We’re sharing them free — no signup needed.';
+    const grid = document.querySelector('.may-tasks-grid');
+    if (grid) grid.innerHTML = MONTH_TASKS[mi].map(t =>
+      '<div class="may-task-card"><div class="mtc-top"><div class="mtc-name">' + t.name + '</div>' +
+      '<div style="display:flex;align-items:center;gap:6px;flex-shrink:0;"><div class="mtc-dot ' + t.dot + '"></div>' +
+      '<span class="tag ' + t.tag + '">' + t.tl + '</span></div></div>' +
+      '<div class="mtc-why">' + t.why + '</div></div>'
+    ).join('');
+    const ctaStrong = document.querySelector('.mpc-txt strong');
+    if (ctaStrong) ctaStrong.textContent = 'Want ' + nextName + ' and 10 more months — delivered free on the 1st?';
+
+    // Hero urgency
+    const urg = document.querySelector('.urgency');
+    if (urg) urg.innerHTML = '<span class="pulse"></span>' + name + ' has ' + HPD_COUNTS[mi] + ' HPD deadline' + (HPD_COUNTS[mi] > 1 ? 's' : '') + ' — ' + daysLeft + ' days left to act';
+
+    // Calendar sub
+    const calSub = document.querySelector('.cal-hdr p');
+    if (calSub) calSub.textContent = 'All ' + name + ' tasks are fully visible — it’s your current month. Sign up to unlock the other 11 months instantly.';
+
+    // Sticky CTA
+    const stickyStrong = document.querySelector('.sticky-cta-txt strong');
+    if (stickyStrong) stickyStrong.textContent = 'Don’t miss ' + nextName + '’s deadlines';
+
+    // Toast
+    const toastBody = document.querySelector('.t-body');
+    if (toastBody) toastBody.textContent = 'All 47 tasks revealed. First reminder arrives ' + nextName + ' 1 — check your inbox for ' + name + '’s full list.';
+
+    // Success state
+    const successP = document.querySelector('#success-state p');
+    if (successP) successP.textContent = 'All 12 months are now visible below. Your first monthly reminder arrives ' + nextName + ' 1.';
+  }
+
+  // Days left (always update)
+  const dl = document.getElementById('days-left');
+  if (dl) dl.textContent = daysLeft;
+  const fn = document.querySelector('.form-urgency-nudge');
+  if (fn) fn.innerHTML = name + ' ends in <span id="days-left">' + daysLeft + '</span> days — don’t miss ' + nextName + '’s deadlines';
+}
+
+// ── Sticky mobile CTA ──
 const stickyCta = document.getElementById('sticky-cta');
 let stickyHidden = false;
 function hideStickyBar(){ stickyHidden = true; stickyCta.classList.remove('visible'); }
@@ -1615,38 +1733,24 @@ if(stickyCta){
   const formCard = document.getElementById('form-card');
   const stickyObs = new IntersectionObserver((entries) => {
     if(!stickyHidden){
-      if(!entries[0].isIntersecting){
-        stickyCta.classList.add('visible');
-      } else {
-        stickyCta.classList.remove('visible');
-      }
+      entries[0].isIntersecting ? stickyCta.classList.remove('visible') : stickyCta.classList.add('visible');
     }
   }, { threshold: 0.1 });
   if(formCard) stickyObs.observe(formCard);
 }
 
-// ── Penalty counter animation (Gamification D) ──
+// ── Penalty counter (Gamification D) ──
 function animatePenalty() {
   const el = document.getElementById('penalty-num');
-  const target = 2300000;
-  const duration = 2200;
-  const start = performance.now();
-  function step(now) {
-    const progress = Math.min((now - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    const val = Math.round(eased * target);
-    el.textContent = '$' + val.toLocaleString('en-US');
-    if (progress < 1) requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
+  const target = 2300000, duration = 2200, start = performance.now();
+  (function step(now) {
+    const p = Math.min((now - start) / duration, 1);
+    el.textContent = '$' + Math.round((1 - Math.pow(1-p,3)) * target).toLocaleString('en-US');
+    if (p < 1) requestAnimationFrame(step);
+  })(start);
 }
-
-// Start penalty counter when it enters view
 const penaltyObs = new IntersectionObserver((entries) => {
-  if (entries[0].isIntersecting) {
-    animatePenalty();
-    penaltyObs.disconnect();
-  }
+  if (entries[0].isIntersecting) { animatePenalty(); penaltyObs.disconnect(); }
 }, { threshold: 0.3 });
 penaltyObs.observe(document.getElementById('penalty-num'));
 
@@ -1658,19 +1762,15 @@ function updateProgress(count) {
   document.getElementById('cp-fill').style.width = pct + '%';
   document.getElementById('cp-count').textContent = count + ' / 12';
   document.getElementById('prog-fill').style.width = pct + '%';
-  const formLabel = document.querySelector('.pt-left');
-  if (formLabel) formLabel.textContent = (12 - count) + ' of 12 months locked';
+  const fl = document.querySelector('.pt-left');
+  if (fl) fl.textContent = (12 - count) + ' of 12 months locked';
 }
-// May is already unlocked on load, so start at 1/12 visible
-window.addEventListener('load', () => {
-  setTimeout(() => updateProgress(1), 600);
-});
+window.addEventListener('load', () => { setTimeout(() => updateProgress(1), 600); });
 
 // ── Scroll to form ──
 function scrollToForm() {
   const fc = document.getElementById('form-card');
-  const top = fc.getBoundingClientRect().top + window.pageYOffset - 80;
-  window.scrollTo({ top, behavior: 'smooth' });
+  window.scrollTo({ top: fc.getBoundingClientRect().top + window.pageYOffset - 80, behavior: 'smooth' });
 }
 
 // ── Form submit ──
@@ -1681,40 +1781,32 @@ function handleSubmit() {
   if (!fname)  { shakeFocus('fname');  return; }
   if (!femail || !femail.includes('@')) { shakeFocus('femail'); return; }
   const btn = document.getElementById('cta-btn');
-  btn.disabled = true;
-  btn.textContent = 'Unlocking...';
+  btn.disabled = true; btn.textContent = 'Unlocking...';
   fetch('https://hook.eu1.make.com/tqmgkkgubkr409v3ygd4ohpmxpvx8iw2', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ fname, femail, faddress })
-  })
-  .catch(() => {}) // show success even if network blips
-  .finally(() => { unlockAll(); showSuccess(); showToast(); });
+  }).catch(() => {}).finally(() => { unlockAll(); showSuccess(); showToast(); });
 }
 
 function shakeFocus(id) {
   const el = document.getElementById(id);
-  el.focus();
-  el.style.borderColor = '#DC2626';
+  el.focus(); el.style.borderColor = '#DC2626';
   el.style.boxShadow = '0 0 0 3px rgba(220,38,38,.12)';
   setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 1800);
 }
 
-// ── Unlock all (with staggered streak badges) ──
+// ── Unlock all — skips current month (already open) ──
 function unlockAll() {
-  const ids = ['mc-jan','mc-feb','mc-mar','mc-apr',
-               'mc-jun','mc-jul','mc-aug','mc-sep',
-               'mc-oct','mc-nov','mc-dec'];
+  const mi = new Date().getMonth();
+  const ids = MONTH_IDS.filter((_, i) => i !== mi);
   ids.forEach((id, i) => {
     setTimeout(() => {
       document.getElementById(id).classList.add('unlocked');
-      updateProgress(i + 2); // starts at 1 (May), then 2, 3, …
+      updateProgress(i + 2);
     }, i * 120);
   });
-  // May is already fully open; just update progress to 12
-  setTimeout(() => {
-    updateProgress(12);
-  }, ids.length * 120 + 150);
+  setTimeout(() => updateProgress(12), ids.length * 120 + 150);
 }
 
 function showSuccess() {
@@ -1728,6 +1820,9 @@ function showToast() {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 6000);
 }
+
+// Run on load
+initCurrentMonth();
 </script>
 <template id="__bundler_thumbnail" data-bg-color="#3E8FD4">
   <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
