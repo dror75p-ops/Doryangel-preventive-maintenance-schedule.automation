@@ -810,7 +810,7 @@ footer strong { color: rgba(255,255,255,0.9); }
         addressEl.focus();
         return;
       }
-      if (!/^\d{1,6}\s+[A-Za-z]/.test(address)) {
+      if (!/^\d{1,6}(?:-\d{1,6})?\s+[A-Za-z]/.test(address)) {
         addressEl.classList.add('err');
         showErr('Property address must start with a building number and street name (e.g. 557 Grand Concourse, Bronx, NY 10451).');
         addressEl.focus();
