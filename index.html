@@ -81,7 +81,6 @@ body {
   display: flex; flex-direction: column; align-items: center;
   transition: top 0.35s cubic-bezier(0.4,0,0.2,1);
 }
-.main-nav.bar-hidden { top: 0; }
 .nav-logo-img {
   display: inline-block; text-decoration: none; flex-shrink: 0;
 }
@@ -2098,11 +2097,6 @@ initCurrentMonth();
   hamBtn.addEventListener('click', openDrawer);
   closeBtn.addEventListener('click', closeDrawer);
   overlay.addEventListener('click', closeDrawer);
-
-  window.addEventListener('scroll', function () {
-    if (window.scrollY > 40) nav.classList.add('bar-hidden');
-    else nav.classList.remove('bar-hidden');
-  }, { passive: true });
 })();
 </script>
 </body>
