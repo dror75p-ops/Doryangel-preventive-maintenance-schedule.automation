@@ -205,30 +205,38 @@ body {
   text-transform: uppercase; color: var(--nav-blue); flex-shrink: 0;
 }
 .drawer-tool-card {
-  display: flex; align-items: center; gap: 12px;
-  padding: 11px 16px;
-  background: var(--nav-grey-lt);
-  margin: 0 12px 8px; border-radius: 10px;
-  text-decoration: none; transition: background 0.18s; flex-shrink: 0;
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 16px; background: #ffffff;
+  margin: 0 12px 10px; border-radius: 12px;
+  border: 1px solid #E2E8F0; text-decoration: none;
+  transition: background 0.18s, border-color 0.18s; flex-shrink: 0;
 }
-.drawer-tool-card:hover { background: #dde8f5; }
-.drawer-tool-card.active { background: #EEF4FF; outline: 1.5px solid #1E5AA8; }
+.drawer-tool-card:hover { background: #F8FAFC; border-color: #3A7BDD; }
+.drawer-tool-card.active { background: #EEF4FF; border-color: #1E5AA8; border-width: 1.5px; }
+.drawer-tool-card.coming-soon { opacity: 0.55; border-style: dashed; pointer-events: none; }
 .drawer-tool-icon {
-  width: 36px; height: 36px; border-radius: 8px; background: white;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; flex-shrink: 0; box-shadow: 0 1px 4px rgba(0,0,0,.08);
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
+.drawer-tool-icon.icon-blue { background: #EEF4FF; }
+.drawer-tool-icon.icon-green { background: #ECFDF5; }
+.drawer-tool-icon.icon-grey { background: #F4F7FA; }
 .drawer-tool-info { flex: 1; min-width: 0; }
+.drawer-tool-name-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
 .drawer-tool-name {
   font-family: 'DM Sans', sans-serif;
-  font-size: 13px; font-weight: 700; color: var(--nav-text);
-  line-height: 1.3; display: block; margin-bottom: 2px;
+  font-size: 14px; font-weight: 700; color: var(--nav-text); line-height: 1.3;
+}
+.drawer-tool-badge {
+  font-size: 10px; font-weight: 700; color: #1E5AA8;
+  background: #DBEAFE; border-radius: 4px;
+  padding: 1px 6px; letter-spacing: 0.03em; flex-shrink: 0;
 }
 .drawer-tool-desc {
   font-family: 'DM Sans', sans-serif;
-  font-size: 11px; color: var(--nav-grey); line-height: 1.4; display: block;
+  font-size: 12px; color: var(--nav-grey); line-height: 1.45; display: block;
 }
-.drawer-tool-arrow { color: var(--nav-grey); font-size: 16px; flex-shrink: 0; margin-left: 4px; }
+.drawer-tool-arrow { color: #CBD5E1; font-size: 18px; flex-shrink: 0; margin-left: 2px; align-self: center; }
 .drawer-ctas { padding: 0 20px 28px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
 .drawer-cta-book {
   display: block; text-align: center;
@@ -239,6 +247,16 @@ body {
   transition: background 0.2s;
 }
 .drawer-cta-book:hover { background: #1a3a6e; }
+.drawer-cta-tenant {
+  display: block; text-align: center;
+  background: transparent; color: var(--nav-blue);
+  padding: 12px 20px; border-radius: 10px;
+  border: 1.5px solid var(--nav-blue);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700; font-size: 14px; text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.drawer-cta-tenant:hover { background: var(--nav-blue); color: white; }
 
 /* ── HERO ── */
 .hero {
@@ -1099,32 +1117,48 @@ footer a:hover { text-decoration: underline; }
   <div class="drawer-sep"></div>
   <p class="drawer-tools-label">DoryAngel Automation Tools</p>
   <a href="./" class="drawer-tool-card active">
-    <span class="drawer-tool-icon">📅</span>
+    <span class="drawer-tool-icon icon-blue">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3A7BDD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    </span>
     <span class="drawer-tool-info">
-      <span class="drawer-tool-name">Preventive Maintenance &amp; Compliance</span>
+      <span class="drawer-tool-name-row"><span class="drawer-tool-name">Preventive Maintenance &amp; Compliance</span></span>
       <span class="drawer-tool-desc">Free monthly calendar for NYC landlords</span>
     </span>
     <span class="drawer-tool-arrow">›</span>
   </a>
-  <a href="https://doryangel.com/#tools" class="drawer-tool-card">
-    <span class="drawer-tool-icon">🗂️</span>
+  <a href="https://doryangel.managebuilding.com" target="_blank" rel="noopener" class="drawer-tool-card">
+    <span class="drawer-tool-icon icon-green">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
+    </span>
     <span class="drawer-tool-info">
-      <span class="drawer-tool-name">Owner &amp; Tenant Portal</span>
-      <span class="drawer-tool-desc">Powered by DoryAngel — owner &amp; tenant access</span>
+      <span class="drawer-tool-name-row"><span class="drawer-tool-name">Owner &amp; Tenant Portal</span></span>
+      <span class="drawer-tool-desc">Powered by Buildium · 24/7 access</span>
     </span>
     <span class="drawer-tool-arrow">›</span>
   </a>
   <a href="./digest/" class="drawer-tool-card">
-    <span class="drawer-tool-icon">✉️</span>
+    <span class="drawer-tool-icon icon-blue">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3A7BDD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    </span>
     <span class="drawer-tool-info">
-      <span class="drawer-tool-name">DoryAngel Digest</span>
-      <span class="drawer-tool-desc">NYC landlord insights by topic</span>
+      <span class="drawer-tool-name-row"><span class="drawer-tool-name">DoryAngel Digest</span><span class="drawer-tool-badge">New</span></span>
+      <span class="drawer-tool-desc">Get notified when new articles match your topics</span>
     </span>
     <span class="drawer-tool-arrow">›</span>
   </a>
+  <div class="drawer-tool-card coming-soon">
+    <span class="drawer-tool-icon icon-grey">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B9BAE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    </span>
+    <span class="drawer-tool-info">
+      <span class="drawer-tool-name-row"><span class="drawer-tool-name">More tools coming soon</span></span>
+      <span class="drawer-tool-desc">Maintenance Tracker · Lease Renewal · Vendor Portal</span>
+    </span>
+  </div>
   <div class="drawer-sep"></div>
   <div class="drawer-ctas">
     <a href="https://cal.com/dory-angel-management-v5o0ke/30min" target="_blank" class="drawer-cta-book">Book Free Consultation</a>
+    <a href="https://doryangel.managebuilding.com" target="_blank" rel="noopener" class="drawer-cta-tenant">Tenant Portal →</a>
   </div>
 </div>
 
