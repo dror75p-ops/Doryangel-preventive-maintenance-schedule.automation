@@ -36,27 +36,9 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── ANNOUNCE BAR ── */
-.announce-bar {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 101;
-  background: var(--navy);
-  color: rgba(255,255,255,0.85);
-  font-size: 12px; font-weight: 500;
-  text-align: center;
-  padding: 0 16px;
-  height: 40px;
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-}
-.announce-bar a {
-  color: #7DB8F5;
-  text-decoration: none;
-  font-weight: 700;
-}
-.announce-bar a:hover { color: white; }
-
 /* ── NAV ── */
 nav {
-  position: fixed; top: 40px; left: 0; right: 0; z-index: 100;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   background: rgba(255,255,255,0.97);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--grey-mid);
@@ -207,7 +189,7 @@ nav.bar-hidden { top: 0; }
 .drawer-cta-book:hover { background: #1a3a6e; }
 
 /* ── PAGE BODY PADDING (for fixed nav + announce bar) ── */
-.page-body { padding-top: 112px; }
+.page-body { padding-top: 72px; }
 
 /* ── HERO ── */
 .hero {
@@ -451,12 +433,6 @@ footer strong { color: rgba(255,255,255,0.9); }
 </style>
 </head>
 <body>
-
-<!-- ANNOUNCE BAR -->
-<div class="announce-bar">
-  New Free Tool: <strong>Preventive Maintenance &amp; Compliance Calendar</strong> &mdash; Free for NYC landlords &nbsp;
-  <a href="../" rel="noopener">Get It Free &rarr;</a>
-</div>
 
 <!-- NAV -->
 <nav id="mainNav">
