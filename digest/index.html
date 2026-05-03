@@ -536,7 +536,15 @@ footer strong { color: rgba(255,255,255,0.9); }
           </div>
         </div>
 
-        <p class="step-label">Step 2 — Your property address <span style="text-transform:none;letter-spacing:0;font-size:11px;color:var(--grey);font-weight:400">(optional)</span></p>
+        <p class="step-label">Step 2 — Your name</p>
+        <div class="field-group">
+          <input type="text" id="nameInput" class="field-input"
+            placeholder="First and last name"
+            autocomplete="name"
+            maxlength="100">
+        </div>
+
+        <p class="step-label">Step 3 — Your property address <span style="text-transform:none;letter-spacing:0;font-size:11px;color:var(--grey);font-weight:400">(optional)</span></p>
         <div class="field-group">
           <input type="text" id="addressInput" class="field-input"
             placeholder="e.g. 557 Grand Concourse, Bronx, NY 10451"
@@ -546,7 +554,7 @@ footer strong { color: rgba(255,255,255,0.9); }
             spellcheck="false">
         </div>
 
-        <p class="step-label">Step 3 — Your email</p>
+        <p class="step-label">Step 4 — Your email</p>
         <div class="field-group">
           <input type="email" id="emailInput" class="field-input"
             placeholder="you@example.com"
@@ -744,6 +752,7 @@ footer strong { color: rgba(255,255,255,0.9); }
 (function () {
   var WEBHOOK = 'https://hook.eu1.make.com/2qo6r1tr15cckv1opo8em9x89ip3ku4x';
   var form      = document.getElementById('digestForm');
+  var nameEl    = document.getElementById('nameInput');
   var emailEl   = document.getElementById('emailInput');
   var addressEl = document.getElementById('addressInput');
   var errorEl   = document.getElementById('errorMsg');
@@ -774,9 +783,18 @@ footer strong { color: rgba(255,255,255,0.9); }
     e.preventDefault();
     hideErr();
 
+    var name    = nameEl.value.trim();
     var email   = emailEl.value.trim();
     var address = addressEl.value.trim();
     var topics  = getTopics();
+
+    if (!name || name.length < 2) {
+      nameEl.classList.add('err');
+      showErr('Please enter your name.');
+      nameEl.focus();
+      return;
+    }
+    nameEl.classList.remove('err');
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       emailEl.classList.add('err');
@@ -828,8 +846,7 @@ footer strong { color: rgba(255,255,255,0.9); }
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin .9s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Subscribing…';
 
-    var payload = { email: email, topics: topics };
-    if (address) payload.address = address;
+    var payload = { name: name, email: email, topics: topics, address: address };
 
     fetch(WEBHOOK, {
       method: 'POST',
