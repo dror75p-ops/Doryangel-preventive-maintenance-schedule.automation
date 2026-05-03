@@ -539,8 +539,11 @@ footer strong { color: rgba(255,255,255,0.9); }
         <p class="step-label">Step 2 — Your property address <span style="text-transform:none;letter-spacing:0;font-size:11px;color:var(--grey);font-weight:400">(optional)</span></p>
         <div class="field-group">
           <input type="text" id="addressInput" class="field-input"
-            placeholder="e.g. 123 Grand Concourse, Bronx, NY 10451"
-            autocomplete="street-address">
+            placeholder="e.g. 557 Grand Concourse, Bronx, NY 10451"
+            autocomplete="street-address"
+            maxlength="200"
+            inputmode="text"
+            spellcheck="false">
         </div>
 
         <p class="step-label">Step 3 — Your email</p>
@@ -787,6 +790,40 @@ footer strong { color: rgba(255,255,255,0.9); }
       showErr('Please select at least one topic.');
       return;
     }
+
+    if (address) {
+      if (address.length < 10 || address.length > 200) {
+        addressEl.classList.add('err');
+        showErr('Please enter a complete NYC property address (e.g. 557 Grand Concourse, Bronx, NY 10451).');
+        addressEl.focus();
+        return;
+      }
+      if (/[<>"`;{}\\\|]/.test(address)) {
+        addressEl.classList.add('err');
+        showErr('Property address contains invalid characters.');
+        addressEl.focus();
+        return;
+      }
+      if (/(script|select|insert|update|delete|drop|union|exec|javascript|onerror|onload)/i.test(address)) {
+        addressEl.classList.add('err');
+        showErr('Property address contains invalid content.');
+        addressEl.focus();
+        return;
+      }
+      if (!/^\d{1,6}\s+[A-Za-z]/.test(address)) {
+        addressEl.classList.add('err');
+        showErr('Property address must start with a building number and street name (e.g. 557 Grand Concourse, Bronx, NY 10451).');
+        addressEl.focus();
+        return;
+      }
+      if (!/(?:New York|NY|Bronx|Brooklyn|Queens|Manhattan|Staten Island)/i.test(address)) {
+        addressEl.classList.add('err');
+        showErr('Please enter a NYC property address including the borough or state (e.g. Bronx, NY).');
+        addressEl.focus();
+        return;
+      }
+    }
+    addressEl.classList.remove('err');
 
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin .9s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Subscribing…';
