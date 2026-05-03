@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DoryAngel Digest — Stay Ahead as a NYC Landlord</title>
+  <meta name="description" content="Subscribe to DoryAngel Digest and get notified when we publish new property management articles matching your interests.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', Arial, sans-serif;
+      background: #F0F4FA;
+      color: #1A2740;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    header {
+      background: #0D1E3A;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .header-logo-img {
+      height: 36px;
+      width: auto;
+    }
+    .header-divider {
+      width: 1px;
+      height: 28px;
+      background: rgba(255,255,255,0.25);
+    }
+    .header-tag {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.3px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, #0D1E3A 0%, #1E5AA8 100%);
+      color: white;
+      text-align: center;
+      padding: 56px 24px 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+      padding: 5px 14px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(26px, 5vw, 38px);
+      font-weight: 700;
+      line-height: 1.2;
+      max-width: 560px;
+      margin: 0 auto 14px;
+    }
+    .hero p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.78);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* ── Main card ── */
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      padding: 40px 16px 60px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px rgba(13,30,58,0.10);
+      width: 100%;
+      max-width: 520px;
+      padding: 36px 32px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #8B9BAE;
+      margin-bottom: 20px;
+    }
+
+    /* ── Topics ── */
+    .topics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .topic-option {
+      position: relative;
+    }
+    .topic-option input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .topic-label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 14px 16px;
+      border: 2px solid #E2E8F0;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s;
+    }
+    .topic-label:hover {
+      border-color: #3A7BDD;
+      background: #F5F9FF;
+    }
+    .topic-option input:checked + .topic-label {
+      border-color: #1E5AA8;
+      background: #EEF4FF;
+    }
+    .topic-icon {
+      font-size: 20px;
+      line-height: 1;
+    }
+    .topic-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1A2740;
+      line-height: 1.3;
+    }
+    .topic-desc {
+      font-size: 11px;
+      color: #8B9BAE;
+      line-height: 1.4;
+    }
+    .topic-option input:checked + .topic-label .topic-name { color: #1E5AA8; }
+    .topic-option input:checked + .topic-label .topic-check { display: block; }
+    .topic-check {
+      display: none;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 18px;
+      height: 18px;
+      background: #1E5AA8;
+      border-radius: 50%;
+    }
+    .topic-check::after {
+      content: '';
+      position: absolute;
+      top: 4px; left: 5px;
+      width: 8px; height: 5px;
+      border-left: 2px solid white;
+      border-bottom: 2px solid white;
+      transform: rotate(-45deg);
+    }
+
+    /* ── Email ── */
+    .email-group {
+      margin-bottom: 22px;
+    }
+    label.field-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #556070;
+      margin-bottom: 8px;
+    }
+    input[type="email"] {
+      width: 100%;
+      padding: 13px 16px;
+      font-family: inherit;
+      font-size: 15px;
+      color: #1A2740;
+      background: #F8FAFC;
+      border: 2px solid #E2E8F0;
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.18s;
+    }
+    input[type="email"]:focus {
+      border-color: #1E5AA8;
+      background: white;
+    }
+    input[type="email"].error { border-color: #E05353; }
+
+    /* ── Submit ── */
+    .btn-submit {
+      width: 100%;
+      padding: 15px;
+      background: #1E5AA8;
+      color: white;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-submit:hover { background: #174d96; }
+    .btn-submit:active { transform: scale(0.98); }
+    .btn-submit:disabled { background: #8B9BAE; cursor: not-allowed; }
+
+    /* ── Validation / Success / Error ── */
+    .msg {
+      display: none;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.5;
+      margin-top: 16px;
+    }
+    .msg.error-msg { background: #FFF0F0; border: 1px solid #F5BCBC; color: #B33030; }
+    .msg.success-msg {
+      background: #EDF8ED;
+      border: 1px solid #8FCB8F;
+      color: #1B6B1B;
+      text-align: center;
+      padding: 24px;
+    }
+
+    /* ── Trust strip ── */
+    .trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid #E2E8F0;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #8B9BAE;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 20px 16px 28px;
+      font-size: 12px;
+      color: #8B9BAE;
+      line-height: 1.6;
+    }
+    footer a { color: #1E5AA8; text-decoration: none; }
+
+    @media (max-width: 420px) {
+      .card { padding: 28px 18px; }
+      .topics-grid { grid-template-columns: 1fr; }
+      .hero { padding: 40px 20px 36px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="header-logo" href="https://dror75p-ops.github.io/Doryangel-preventive-maintenance-schedule.automation/" aria-label="DoryAngel Automation tools">
+      <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="40" height="40" rx="8" fill="#1E5AA8"/>
+        <path d="M20 8C13.373 8 8 13.373 8 20s5.373 12 12 12 12-5.373 12-12S26.627 8 20 8zm0 4a8 8 0 1 1 0 16A8 8 0 0 1 20 12zm0 3a5 5 0 1 0 0 10A5 5 0 0 0 20 15z" fill="white" opacity="0.9"/>
+      </svg>
+    </a>
+    <div class="header-divider"></div>
+    <span class="header-tag">DoryAngel Digest</span>
+  </header>
+
+  <div class="hero">
+    <div class="hero-badge">Free Newsletter</div>
+    <h1>Stay ahead as a NYC landlord</h1>
+    <p>Get notified the moment we publish articles that match your interests — no noise, just what matters to you.</p>
+  </div>
+
+  <main>
+    <div class="card">
+
+      <!-- Success state (hidden until submit) -->
+      <div class="msg success-msg" id="successMsg">
+        <div style="font-size:32px;margin-bottom:10px">🎉</div>
+        <strong style="font-size:17px;display:block;margin-bottom:6px">You're in!</strong>
+        Check your inbox for a confirmation email. We'll reach out the next time we publish something matching your topics.
+      </div>
+
+      <!-- Form (hidden after submit) -->
+      <form id="digestForm" novalidate>
+
+        <p class="section-label">1 — Pick your topics</p>
+
+        <div class="topics-grid">
+          <div class="topic-option">
+            <input type="checkbox" id="t1" name="topics" value="property-management">
+            <label class="topic-label" for="t1">
+              <span class="topic-check"></span>
+              <span class="topic-icon">🏢</span>
+              <span class="topic-name">Property Management</span>
+              <span class="topic-desc">Landlord tips, HPD rules, rent collection</span>
+            </label>
+          </div>
+          <div class="topic-option">
+            <input type="checkbox" id="t2" name="topics" value="diy-property-management">
+            <label class="topic-label" for="t2">
+              <span class="topic-check"></span>
+              <span class="topic-icon">🔧</span>
+              <span class="topic-name">DIY Landlord</span>
+              <span class="topic-desc">Self-manage, handle tenants, save costs</span>
+            </label>
+          </div>
+          <div class="topic-option">
+            <input type="checkbox" id="t3" name="topics" value="investments">
+            <label class="topic-label" for="t3">
+              <span class="topic-check"></span>
+              <span class="topic-icon">📈</span>
+              <span class="topic-name">Investments</span>
+              <span class="topic-desc">NYC market, ROI, buy vs. sell decisions</span>
+            </label>
+          </div>
+          <div class="topic-option">
+            <input type="checkbox" id="t4" name="topics" value="property-management,diy-property-management,investments" data-all="true">
+            <label class="topic-label" for="t4">
+              <span class="topic-check"></span>
+              <span class="topic-icon">✨</span>
+              <span class="topic-name">All Topics</span>
+              <span class="topic-desc">Send me everything</span>
+            </label>
+          </div>
+        </div>
+
+        <p class="section-label">2 — Your email</p>
+
+        <div class="email-group">
+          <label class="field-label" for="emailInput">Email address</label>
+          <input type="email" id="emailInput" name="email" placeholder="you@example.com" autocomplete="email">
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .99h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          Subscribe — it's free
+        </button>
+
+        <div class="msg error-msg" id="errorMsg"></div>
+
+        <div class="trust">
+          <span class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B9BAE" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            No spam, ever
+          </span>
+          <span class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B9BAE" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            Unsubscribe anytime
+          </span>
+          <span class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B9BAE" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Only when relevant posts publish
+          </span>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <strong>DoryAngel LLC</strong> · 557 Grand Concourse Ave #4123, Bronx, NY 10451<br>
+    <a href="mailto:office@doryangel.com">office@doryangel.com</a> ·
+    <a href="https://dror75p-ops.github.io/Doryangel-preventive-maintenance-schedule.automation/">Back to tools</a>
+  </footer>
+
+  <script>
+    var WEBHOOK = 'https://hook.eu1.make.com/2qo6r1tr15cckv1opo8em9x89ip3ku4x';
+    var form = document.getElementById('digestForm');
+    var emailInput = document.getElementById('emailInput');
+    var errorMsg = document.getElementById('errorMsg');
+    var successMsg = document.getElementById('successMsg');
+    var submitBtn = document.getElementById('submitBtn');
+
+    // "All Topics" checkbox logic
+    document.getElementById('t4').addEventListener('change', function () {
+      if (this.checked) {
+        ['t1','t2','t3'].forEach(function(id){ document.getElementById(id).checked = false; });
+      }
+    });
+    ['t1','t2','t3'].forEach(function(id){
+      document.getElementById(id).addEventListener('change', function(){
+        if (this.checked) document.getElementById('t4').checked = false;
+      });
+    });
+
+    function getSelectedTopics() {
+      var allCheckbox = document.getElementById('t4');
+      if (allCheckbox.checked) return ['property-management','diy-property-management','investments'];
+      var checked = [];
+      document.querySelectorAll('input[name="topics"]:checked:not([data-all])').forEach(function(cb){
+        checked.push(cb.value);
+      });
+      return checked;
+    }
+
+    function showError(msg) {
+      errorMsg.textContent = msg;
+      errorMsg.style.display = 'block';
+    }
+    function hideError() { errorMsg.style.display = 'none'; }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      hideError();
+
+      var email = emailInput.value.trim();
+      var topics = getSelectedTopics();
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        emailInput.classList.add('error');
+        showError('Please enter a valid email address.');
+        emailInput.focus();
+        return;
+      }
+      emailInput.classList.remove('error');
+
+      if (topics.length === 0) {
+        showError('Please select at least one topic to subscribe to.');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin 0.9s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Subscribing…';
+
+      fetch(WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, topics: topics })
+      })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Server error ' + res.status);
+        form.style.display = 'none';
+        successMsg.style.display = 'block';
+      })
+      .catch(function (err) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .99h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> Subscribe — it\'s free';
+        showError('Something went wrong. Please try again in a moment.');
+      });
+    });
+  </script>
+  <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+</body>
+</html>
