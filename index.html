@@ -57,98 +57,188 @@ body {
   font-size: 15px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  padding-top: 112px;
 }
 
-/* ── HEADER ── */
-.hdr {
-  background: var(--white);
-  border-bottom: 1px solid var(--border);
+/* ── NAV SHARED VARS ── */
+:root {
+  --nav-navy:      #0D1E3A;
+  --nav-blue:      #3A7BDD;
+  --nav-grey-mid:  #E2E8F0;
+  --nav-grey-lt:   #F4F7FA;
+  --nav-text:      #1A2740;
+  --nav-muted:     #556070;
+  --nav-grey:      #8B9BAE;
+}
+
+/* ── ANNOUNCE BAR ── */
+.announce-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 101;
+  background: var(--nav-navy);
+  color: rgba(255,255,255,0.85);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 500;
+  text-align: center;
   padding: 0 16px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: sticky; top: 0; z-index: 200;
-  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  height: 40px;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
 }
-.hdr-inner {
-  width: auto;
-  max-width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  min-width: 0;
+.announce-bar a { color: #7DB8F5; text-decoration: none; font-weight: 700; }
+.announce-bar a:hover { color: white; }
+
+/* ── NAV ── */
+.main-nav {
+  position: fixed; top: 40px; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--nav-grey-mid);
+  padding: 10px 40px 0;
+  display: flex; flex-direction: column; align-items: center;
+  transition: top 0.35s cubic-bezier(0.4,0,0.2,1);
 }
-.logo {
-  display: flex; align-items: center; gap: 8px;
+.main-nav.bar-hidden { top: 0; }
+.nav-logo-img {
+  display: inline-block; text-decoration: none; flex-shrink: 0;
+}
+.nav-logo-img img {
+  height: 40px; object-fit: contain;
+  animation: navLogoIn 1.1s cubic-bezier(0.16,1,0.3,1) both,
+             navBreathe 5s ease-in-out 1.5s infinite;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.nav-logo-img:hover img { animation-play-state: paused; transform: scale(1.08) rotate(-3deg); }
+@keyframes navLogoIn {
+  0%   { opacity: 0; transform: translateX(-30px) scale(0.8); }
+  60%  { opacity: 1; transform: translateX(4px) scale(1.04); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes navBreathe { 0%,100%{transform:scale(1)} 50%{transform:scale(1.025)} }
+.nav-bottom {
+  display: flex; align-items: center; justify-content: center;
+  gap: 20px; padding: 8px 0; flex-wrap: wrap; width: 100%;
+}
+.nav-links-list { display: flex; gap: 24px; list-style: none; }
+.nav-links-list a {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 500; color: var(--nav-muted);
+  text-decoration: none; letter-spacing: 0.01em; transition: color 0.2s;
+}
+.nav-links-list a:hover { color: var(--nav-navy); }
+.nav-divider { width: 1px; height: 18px; background: var(--nav-grey-mid); }
+.nav-cta-btn {
+  background: transparent; color: var(--nav-navy);
+  padding: 8px 18px; border-radius: 7px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 700;
   text-decoration: none;
-  min-width: 0;
-  flex: 1 1 auto;
-  overflow: hidden;
-}
-.logo-icon { height: 44px; width: auto; object-fit: contain; flex-shrink: 0;
-  animation: turtleFlip 3s ease-in-out infinite;
-  transform-origin: center;
-}
-@keyframes turtleFlip {
-  0%   { transform: rotateY(0deg); }
-  40%  { transform: rotateY(180deg); }
-  50%  { transform: rotateY(180deg); }
-  90%  { transform: rotateY(360deg); }
-  100% { transform: rotateY(360deg); }
-}
-.logo-text { line-height: 1.1; min-width: 0; overflow: hidden; }
-.logo-name {
-  font-family: var(--font-display);
-  font-weight: 800; font-size: 22px;
-  color: var(--charcoal);
-  letter-spacing: .04em;
-  display: block;
-  white-space: nowrap;
-  text-transform: uppercase;
-}
-.logo-tagline {
-  font-size: 9px; font-weight: 600;
-  color: var(--blue);
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  display: block;
+  border: 1.5px solid var(--nav-navy);
+  letter-spacing: 0.02em;
+  transition: background 0.2s, color 0.2s;
   white-space: nowrap;
 }
-@media(max-width:420px){
-  .logo-name { font-size: 18px; }
-  .logo-tagline { font-size: 7px; letter-spacing: .09em; }
+.nav-cta-btn:hover { background: var(--nav-navy); color: white; }
+.nav-hamburger-btn, .nav-a11y-btn {
+  display: none; align-items: center; justify-content: center;
+  width: 44px; height: 44px;
+  background: #3A7BDD; border: none; border-radius: 8px;
+  cursor: pointer; flex-shrink: 0; transition: background 0.2s;
+}
+.nav-hamburger-btn:hover, .nav-a11y-btn:hover { background: #2e69c7; }
+.nav-hamburger-btn svg, .nav-a11y-btn svg { display: block; pointer-events: none; }
+
+@media (max-width: 900px) {
+  .main-nav { padding: 8px 16px 0; }
+  .nav-links-list { display: none; }
+  .nav-bottom { gap: 8px; padding: 6px 0; flex-wrap: nowrap; align-items: center; }
+  .nav-divider { display: none; }
+  .nav-cta-btn {
+    flex: 1; min-width: 0; font-size: 13px; padding: 10px 14px;
+    width: auto; max-width: none; align-self: center; min-height: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .nav-hamburger-btn, .nav-a11y-btn { display: flex; flex-shrink: 0; }
 }
 
-.hdr-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.hdr-label { display: none !important; }
+/* ── NAV OVERLAY ── */
+.nav-overlay {
+  display: none; position: fixed; inset: 0; z-index: 98;
+  background: rgba(13,30,58,0.5); backdrop-filter: blur(2px);
+}
+.nav-overlay.is-open { display: block; }
 
-.hdr-btn {
-  background: var(--blue);
-  color: var(--white);
-  border: none; border-radius: var(--r);
-  padding: 8px 14px;
-  font-size: 12px; font-weight: 600;
-  font-family: var(--font-body);
-  cursor: pointer; text-decoration: none;
-  display: inline-block;
-  transition: background .18s;
-  white-space: nowrap;
-  flex-shrink: 0;
-  max-width: 160px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* ── NAV DRAWER ── */
+.nav-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 99;
+  width: min(320px, 88vw); background: white;
+  box-shadow: -8px 0 40px rgba(13,30,58,0.18);
+  transform: translateX(100%);
+  transition: transform 0.32s cubic-bezier(0.4,0,0.2,1);
+  display: flex; flex-direction: column; overflow-y: auto;
 }
-/* Short label on very narrow screens */
-.hdr-btn .btn-long { display: inline; }
-.hdr-btn .btn-short { display: none; }
-@media(max-width:480px){
-  .hdr-btn .btn-long  { display: none; }
-  .hdr-btn .btn-short { display: inline; }
-  .hdr-btn { max-width: 130px; }
+.nav-drawer.is-open { transform: translateX(0); }
+.drawer-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 20px; border-bottom: 1px solid var(--nav-grey-mid); flex-shrink: 0;
 }
-.hdr-btn:hover { background: var(--blue-dark); }
+.drawer-logo-wrap img { height: 32px; width: auto; object-fit: contain; }
+.drawer-close-btn {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: var(--nav-grey-lt); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.drawer-links {
+  list-style: none; padding: 20px 20px 0; flex-shrink: 0;
+}
+.drawer-links li { border-bottom: 1px solid var(--nav-grey-lt); }
+.drawer-links a {
+  display: block; padding: 14px 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 500;
+  color: var(--nav-text); text-decoration: none; transition: color 0.2s;
+}
+.drawer-links a:hover { color: var(--nav-blue); }
+.drawer-sep { height: 1px; background: var(--nav-grey-mid); margin: 16px 20px; flex-shrink: 0; }
+.drawer-tools-label {
+  padding: 0 20px 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 1.4px;
+  text-transform: uppercase; color: var(--nav-blue); flex-shrink: 0;
+}
+.drawer-tool-card {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 16px;
+  background: var(--nav-grey-lt);
+  margin: 0 12px 8px; border-radius: 10px;
+  text-decoration: none; transition: background 0.18s; flex-shrink: 0;
+}
+.drawer-tool-card:hover { background: #dde8f5; }
+.drawer-tool-card.active { background: #EEF4FF; outline: 1.5px solid #1E5AA8; }
+.drawer-tool-icon {
+  width: 36px; height: 36px; border-radius: 8px; background: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0; box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+.drawer-tool-info { flex: 1; min-width: 0; }
+.drawer-tool-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 700; color: var(--nav-text);
+  line-height: 1.3; display: block; margin-bottom: 2px;
+}
+.drawer-tool-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px; color: var(--nav-grey); line-height: 1.4; display: block;
+}
+.drawer-tool-arrow { color: var(--nav-grey); font-size: 16px; flex-shrink: 0; margin-left: 4px; }
+.drawer-ctas { padding: 0 20px 28px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+.drawer-cta-book {
+  display: block; text-align: center;
+  background: var(--nav-navy); color: white;
+  padding: 14px 20px; border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700; font-size: 14px; text-decoration: none;
+  transition: background 0.2s;
+}
+.drawer-cta-book:hover { background: #1a3a6e; }
 
 /* ── HERO ── */
 .hero {
@@ -945,25 +1035,98 @@ footer a:hover { text-decoration: underline; }
   </div>
 </div>
 
-<!-- HEADER -->
-<header class="hdr">
-  <div class="hdr-inner">
-    <a href="https://dror75p-ops.github.io/Doryangel-web-3-carousel-blog/" class="logo">
-      <img src="assets/logo-icon.jpg" alt="Doryangel" class="logo-icon">
-      <div class="logo-text">
-        <span class="logo-name">DORYANGEL</span>
-        <span class="logo-tagline">Property Automation</span>
-      </div>
-    </a>
-    <div class="hdr-actions">
-      <span class="hdr-label">Free Tool</span>
-      <a href="https://dror75p-ops.github.io/Doryangel-web-3-carousel-blog/#contact" class="hdr-btn">
-        <span class="btn-long">Book Free Consultation</span>
-        <span class="btn-short">Consult Us</span>
-      </a>
-    </div>
+<!-- ANNOUNCE BAR -->
+<div class="announce-bar">
+  New Free Tool: <strong>Preventive Maintenance &amp; Compliance Calendar</strong> &mdash; Free for NYC landlords &nbsp;
+  <a href="./">Get It Free &rarr;</a>
+</div>
+
+<!-- NAV -->
+<nav class="main-nav" id="mainNav">
+  <a href="https://doryangel.com/" class="nav-logo-img" id="navLogo">
+    <img src="https://dror75p-ops.github.io/Doryangel-web-3-carousel-blog/assets/logo.jpg" alt="DoryAngel">
+  </a>
+  <div class="nav-bottom">
+    <ul class="nav-links-list">
+      <li><a href="https://doryangel.com/#services">Services</a></li>
+      <li><a href="https://doryangel.com/#pricing">Pricing</a></li>
+      <li><a href="https://doryangel.com/#about">About</a></li>
+      <li><a href="https://doryangel.com/#reviews">Reviews</a></li>
+      <li><a href="https://doryangel.com/#faq">FAQ</a></li>
+      <li><a href="https://doryangel.com/#blog">Blog</a></li>
+      <li><a href="https://doryangel.com/#contact">Contact</a></li>
+    </ul>
+    <div class="nav-divider"></div>
+    <button class="nav-a11y-btn" aria-label="Accessibility options" onclick="var uw=document.getElementById('userwayAccessibilityIcon');if(uw)uw.click();">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="white" aria-hidden="true"><circle cx="12" cy="4" r="2.2"/><path d="M15.5 8.5h-7a.5.5 0 0 0-.45.72l2.2 4.78H8a1 1 0 0 0 0 2h2.5l.5 4h-1a1 1 0 0 0 0 2h4a1 1 0 0 0 0-2h-1l.5-4H16a1 1 0 0 0 0-2h-2.25l2.2-4.78A.5.5 0 0 0 15.5 8.5z"/></svg>
+    </button>
+    <a href="https://cal.com/dory-angel-management-v5o0ke/30min" target="_blank" class="nav-cta-btn">Book Free Consultation</a>
+    <button class="nav-hamburger-btn" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navDrawer">
+      <svg width="22" height="16" viewBox="0 0 22 16" fill="none" aria-hidden="true">
+        <rect y="0" width="22" height="2.5" rx="1.25" fill="white"/>
+        <rect y="6.75" width="22" height="2.5" rx="1.25" fill="white"/>
+        <rect y="13.5" width="22" height="2.5" rx="1.25" fill="white"/>
+      </svg>
+    </button>
   </div>
-</header>
+</nav>
+
+<!-- NAV OVERLAY -->
+<div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
+
+<!-- NAV DRAWER -->
+<div class="nav-drawer" id="navDrawer" role="dialog" aria-label="Navigation menu" aria-modal="true">
+  <div class="drawer-header">
+    <div class="drawer-logo-wrap">
+      <img src="https://dror75p-ops.github.io/Doryangel-web-3-carousel-blog/assets/logo.jpg" alt="DoryAngel">
+    </div>
+    <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Close menu">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <line x1="2" y1="2" x2="16" y2="16" stroke="#232323" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="16" y1="2" x2="2" y2="16" stroke="#232323" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+  <ul class="drawer-links">
+    <li><a href="https://doryangel.com/#services">Services</a></li>
+    <li><a href="https://doryangel.com/#pricing">Pricing</a></li>
+    <li><a href="https://doryangel.com/#about">About</a></li>
+    <li><a href="https://doryangel.com/#reviews">Reviews</a></li>
+    <li><a href="https://doryangel.com/#faq">FAQ</a></li>
+    <li><a href="https://doryangel.com/#blog">Blog</a></li>
+    <li><a href="https://doryangel.com/#contact">Contact</a></li>
+  </ul>
+  <div class="drawer-sep"></div>
+  <p class="drawer-tools-label">DoryAngel Automation Tools</p>
+  <a href="./" class="drawer-tool-card active">
+    <span class="drawer-tool-icon">📅</span>
+    <span class="drawer-tool-info">
+      <span class="drawer-tool-name">Preventive Maintenance &amp; Compliance</span>
+      <span class="drawer-tool-desc">Free monthly calendar for NYC landlords</span>
+    </span>
+    <span class="drawer-tool-arrow">›</span>
+  </a>
+  <a href="https://doryangel.com/#tools" class="drawer-tool-card">
+    <span class="drawer-tool-icon">🗂️</span>
+    <span class="drawer-tool-info">
+      <span class="drawer-tool-name">Owner &amp; Tenant Portal</span>
+      <span class="drawer-tool-desc">Powered by DoryAngel — owner &amp; tenant access</span>
+    </span>
+    <span class="drawer-tool-arrow">›</span>
+  </a>
+  <a href="./digest/" class="drawer-tool-card">
+    <span class="drawer-tool-icon">✉️</span>
+    <span class="drawer-tool-info">
+      <span class="drawer-tool-name">DoryAngel Digest</span>
+      <span class="drawer-tool-desc">NYC landlord insights by topic</span>
+    </span>
+    <span class="drawer-tool-arrow">›</span>
+  </a>
+  <div class="drawer-sep"></div>
+  <div class="drawer-ctas">
+    <a href="https://cal.com/dory-angel-management-v5o0ke/30min" target="_blank" class="drawer-cta-book">Book Free Consultation</a>
+  </div>
+</div>
 
 <!-- MAY PREVIEW SECTION — Free value, no signup needed, first thing visible -->
 <section class="may-preview">
@@ -1895,5 +2058,39 @@ initCurrentMonth();
     <rect x="85" y="58" width="22" height="14" rx="2" fill="white" opacity="0.25"/>
   </svg>
 </template>
+
+<!-- NAV DRAWER JS -->
+<script>
+(function () {
+  var hamBtn   = document.getElementById('hamburgerBtn');
+  var closeBtn = document.getElementById('drawerCloseBtn');
+  var overlay  = document.getElementById('navOverlay');
+  var drawer   = document.getElementById('navDrawer');
+  var nav      = document.getElementById('mainNav');
+  if (!hamBtn) return;
+
+  function openDrawer() {
+    drawer.classList.add('is-open');
+    overlay.classList.add('is-open');
+    hamBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    drawer.classList.remove('is-open');
+    overlay.classList.remove('is-open');
+    hamBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  hamBtn.addEventListener('click', openDrawer);
+  closeBtn.addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 40) nav.classList.add('bar-hidden');
+    else nav.classList.remove('bar-hidden');
+  }, { passive: true });
+})();
+</script>
 </body>
 </html>

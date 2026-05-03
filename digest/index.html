@@ -398,14 +398,46 @@ footer strong { color: rgba(255,255,255,0.9); }
   .hero { padding: 48px 20px 40px; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── AUTOMATION TOOLS SECTION IN DRAWER ── */
+.drawer-tools-label {
+  padding: 16px 20px 8px;
+  font-size: 10px; font-weight: 700; letter-spacing: 1.4px;
+  text-transform: uppercase; color: var(--blue);
+}
+.drawer-tool-card {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 16px;
+  background: var(--grey-light);
+  margin: 0 12px 8px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background 0.18s;
+}
+.drawer-tool-card:hover { background: #dde8f5; }
+.drawer-tool-card.active { background: #EEF4FF; outline: 1.5px solid #1E5AA8; }
+.drawer-tool-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+.drawer-tool-info { flex: 1; min-width: 0; }
+.drawer-tool-name {
+  font-size: 13px; font-weight: 700; color: var(--text);
+  line-height: 1.3; display: block; margin-bottom: 2px;
+}
+.drawer-tool-desc { font-size: 11px; color: var(--grey); line-height: 1.4; display: block; }
+.drawer-tool-arrow { color: var(--grey); font-size: 16px; flex-shrink: 0; margin-left: 4px; }
 </style>
 </head>
 <body>
 
 <!-- ANNOUNCE BAR -->
 <div class="announce-bar">
-  <strong>DoryAngel</strong> &mdash; Flat-Fee NYC Property Management from $99/mo &nbsp;
-  <a href="https://doryangel.com/" target="_blank" rel="noopener">Learn More &rarr;</a>
+  New Free Tool: <strong>Preventive Maintenance &amp; Compliance Calendar</strong> &mdash; Free for NYC landlords &nbsp;
+  <a href="../" rel="noopener">Get It Free &rarr;</a>
 </div>
 
 <!-- NAV -->
@@ -417,8 +449,10 @@ footer strong { color: rgba(255,255,255,0.9); }
     <ul class="nav-links">
       <li><a href="https://doryangel.com/#services">Services</a></li>
       <li><a href="https://doryangel.com/#pricing">Pricing</a></li>
+      <li><a href="https://doryangel.com/#about">About</a></li>
+      <li><a href="https://doryangel.com/#reviews">Reviews</a></li>
+      <li><a href="https://doryangel.com/#faq">FAQ</a></li>
       <li><a href="https://doryangel.com/#blog">Blog</a></li>
-      <li><a href="https://doryangel.com/#tools">Tools</a></li>
       <li><a href="https://doryangel.com/#contact">Contact</a></li>
     </ul>
     <div class="nav-divider"></div>
@@ -458,11 +492,38 @@ footer strong { color: rgba(255,255,255,0.9); }
   <ul class="drawer-links">
     <li><a href="https://doryangel.com/#services">Services</a></li>
     <li><a href="https://doryangel.com/#pricing">Pricing</a></li>
+    <li><a href="https://doryangel.com/#about">About</a></li>
+    <li><a href="https://doryangel.com/#reviews">Reviews</a></li>
+    <li><a href="https://doryangel.com/#faq">FAQ</a></li>
     <li><a href="https://doryangel.com/#blog">Blog</a></li>
-    <li><a href="https://doryangel.com/#tools">Tools</a></li>
     <li><a href="https://doryangel.com/#contact">Contact</a></li>
-    <li><a href="." style="color:#1E5AA8;font-weight:700;">DoryAngel Digest ✉</a></li>
   </ul>
+  <div class="drawer-sep"></div>
+  <p class="drawer-tools-label">DoryAngel Automation Tools</p>
+  <a href="../" class="drawer-tool-card">
+    <span class="drawer-tool-icon">📅</span>
+    <span class="drawer-tool-info">
+      <span class="drawer-tool-name">Preventive Maintenance &amp; Compliance</span>
+      <span class="drawer-tool-desc">Free monthly calendar for NYC landlords</span>
+    </span>
+    <span class="drawer-tool-arrow">›</span>
+  </a>
+  <a href="https://doryangel.com/#tools" class="drawer-tool-card">
+    <span class="drawer-tool-icon">🗂️</span>
+    <span class="drawer-tool-info">
+      <span class="drawer-tool-name">Owner &amp; Tenant Portal</span>
+      <span class="drawer-tool-desc">Powered by DoryAngel — owner &amp; tenant access</span>
+    </span>
+    <span class="drawer-tool-arrow">›</span>
+  </a>
+  <a href="./" class="drawer-tool-card active">
+    <span class="drawer-tool-icon">✉️</span>
+    <span class="drawer-tool-info">
+      <span class="drawer-tool-name">DoryAngel Digest</span>
+      <span class="drawer-tool-desc">NYC landlord insights by topic</span>
+    </span>
+    <span class="drawer-tool-arrow">›</span>
+  </a>
   <div class="drawer-sep"></div>
   <div class="drawer-ctas">
     <a href="https://cal.com/dory-angel-management-v5o0ke/30min" target="_blank" class="drawer-cta-book">Book Free Consultation</a>
