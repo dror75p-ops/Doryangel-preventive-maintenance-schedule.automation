@@ -1,355 +1,533 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DoryAngel Digest — Stay Ahead as a NYC Landlord</title>
-  <meta name="description" content="Subscribe to DoryAngel Digest and get notified when we publish new property management articles matching your interests.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DoryAngel Digest — Stay Ahead as a NYC Landlord</title>
+<meta name="description" content="Subscribe to DoryAngel Digest. Get notified when we publish new property management articles that match your interests. Free for NYC landlords.">
+<meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      font-family: 'DM Sans', Arial, sans-serif;
-      background: #F0F4FA;
-      color: #1A2740;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+:root {
+  --navy:       #0D1E3A;
+  --blue:       #3A7BDD;
+  --blue-light: #5B9FEA;
+  --blue-dim:   #EBF3FD;
+  --grey:       #8B9BAE;
+  --grey-light: #F4F7FA;
+  --grey-mid:   #E2E8F0;
+  --text:       #1A2740;
+  --text-muted: #556070;
+  --white:      #FFFFFF;
+  --radius:     12px;
+  --shadow:     0 4px 24px rgba(13,30,58,0.08);
+  --shadow-lg:  0 12px 48px rgba(13,30,58,0.14);
+}
 
-    /* ── Header ── */
-    header {
-      background: #0D1E3A;
-      padding: 18px 24px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .header-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-    }
-    .header-logo-img {
-      height: 36px;
-      width: auto;
-    }
-    .header-divider {
-      width: 1px;
-      height: 28px;
-      background: rgba(255,255,255,0.25);
-    }
-    .header-tag {
-      font-size: 14px;
-      font-weight: 600;
-      color: rgba(255,255,255,0.85);
-      letter-spacing: 0.3px;
-    }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background: var(--white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
 
-    /* ── Hero ── */
-    .hero {
-      background: linear-gradient(135deg, #0D1E3A 0%, #1E5AA8 100%);
-      color: white;
-      text-align: center;
-      padding: 56px 24px 48px;
-    }
-    .hero-badge {
-      display: inline-block;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.9);
-      padding: 5px 14px;
-      margin-bottom: 20px;
-    }
-    .hero h1 {
-      font-size: clamp(26px, 5vw, 38px);
-      font-weight: 700;
-      line-height: 1.2;
-      max-width: 560px;
-      margin: 0 auto 14px;
-    }
-    .hero p {
-      font-size: 16px;
-      color: rgba(255,255,255,0.78);
-      max-width: 480px;
-      margin: 0 auto;
-      line-height: 1.65;
-    }
+/* ── ANNOUNCE BAR ── */
+.announce-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 101;
+  background: var(--navy);
+  color: rgba(255,255,255,0.85);
+  font-size: 12px; font-weight: 500;
+  text-align: center;
+  padding: 0 16px;
+  height: 40px;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.announce-bar a {
+  color: #7DB8F5;
+  text-decoration: none;
+  font-weight: 700;
+}
+.announce-bar a:hover { color: white; }
 
-    /* ── Main card ── */
-    main {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      padding: 40px 16px 60px;
-    }
-    .card {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 4px 32px rgba(13,30,58,0.10);
-      width: 100%;
-      max-width: 520px;
-      padding: 36px 32px;
-    }
+/* ── NAV ── */
+nav {
+  position: fixed; top: 40px; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--grey-mid);
+  padding: 10px 40px 0;
+  display: flex; flex-direction: column; align-items: center;
+  transition: top 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+nav.bar-hidden { top: 0; }
 
-    .section-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: #8B9BAE;
-      margin-bottom: 20px;
-    }
+.nav-logo {
+  display: inline-block;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.nav-logo img {
+  height: 40px; object-fit: contain;
+  transform-origin: 50% 80%;
+  animation: logoWalkIn 1.1s cubic-bezier(0.16,1,0.3,1) both,
+             logoBreathe 5s ease-in-out 1.5s infinite;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.nav-logo:hover img { animation-play-state: paused; transform: scale(1.08) rotate(-3deg); }
+@keyframes logoWalkIn {
+  0%   { opacity: 0; transform: translateX(-30px) scale(0.8); }
+  60%  { opacity: 1; transform: translateX(4px) scale(1.04); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes logoBreathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.025); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-logo img { animation: none !important; }
+}
 
-    /* ── Topics ── */
-    .topics-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 28px;
-    }
-    .topic-option {
-      position: relative;
-    }
-    .topic-option input[type="checkbox"] {
-      position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    .topic-label {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      padding: 14px 16px;
-      border: 2px solid #E2E8F0;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: border-color 0.18s, background 0.18s;
-    }
-    .topic-label:hover {
-      border-color: #3A7BDD;
-      background: #F5F9FF;
-    }
-    .topic-option input:checked + .topic-label {
-      border-color: #1E5AA8;
-      background: #EEF4FF;
-    }
-    .topic-icon {
-      font-size: 20px;
-      line-height: 1;
-    }
-    .topic-name {
-      font-size: 13px;
-      font-weight: 600;
-      color: #1A2740;
-      line-height: 1.3;
-    }
-    .topic-desc {
-      font-size: 11px;
-      color: #8B9BAE;
-      line-height: 1.4;
-    }
-    .topic-option input:checked + .topic-label .topic-name { color: #1E5AA8; }
-    .topic-option input:checked + .topic-label .topic-check { display: block; }
-    .topic-check {
-      display: none;
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 18px;
-      height: 18px;
-      background: #1E5AA8;
-      border-radius: 50%;
-    }
-    .topic-check::after {
-      content: '';
-      position: absolute;
-      top: 4px; left: 5px;
-      width: 8px; height: 5px;
-      border-left: 2px solid white;
-      border-bottom: 2px solid white;
-      transform: rotate(-45deg);
-    }
+.nav-bottom {
+  display: flex; align-items: center; justify-content: center;
+  gap: 20px; padding: 8px 0; flex-wrap: wrap;
+  width: 100%;
+}
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  font-size: 14px; font-weight: 500; color: var(--text-muted);
+  text-decoration: none; letter-spacing: 0.01em;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--navy); }
+.nav-links a.active { color: var(--navy); font-weight: 700; }
+.nav-divider { width: 1px; height: 18px; background: var(--grey-mid); }
+.nav-cta {
+  background: transparent; color: var(--navy);
+  padding: 8px 18px; border-radius: 7px;
+  font-size: 13px; font-weight: 700;
+  text-decoration: none;
+  border: 1.5px solid var(--navy);
+  letter-spacing: 0.02em;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--navy); color: white; }
 
-    /* ── Email ── */
-    .email-group {
-      margin-bottom: 22px;
-    }
-    label.field-label {
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      color: #556070;
-      margin-bottom: 8px;
-    }
-    input[type="email"] {
-      width: 100%;
-      padding: 13px 16px;
-      font-family: inherit;
-      font-size: 15px;
-      color: #1A2740;
-      background: #F8FAFC;
-      border: 2px solid #E2E8F0;
-      border-radius: 10px;
-      outline: none;
-      transition: border-color 0.18s;
-    }
-    input[type="email"]:focus {
-      border-color: #1E5AA8;
-      background: white;
-    }
-    input[type="email"].error { border-color: #E05353; }
+/* ── HAMBURGER + A11Y ── */
+.hamburger-btn, .a11y-nav-btn {
+  display: none;
+  align-items: center; justify-content: center;
+  width: 44px; height: 44px;
+  background: #3A7BDD;
+  border: none; border-radius: 8px;
+  cursor: pointer; flex-shrink: 0;
+  transition: background 0.2s;
+}
+.hamburger-btn:hover, .a11y-nav-btn:hover { background: #2e69c7; }
+.hamburger-btn svg, .a11y-nav-btn svg { display: block; pointer-events: none; }
 
-    /* ── Submit ── */
-    .btn-submit {
-      width: 100%;
-      padding: 15px;
-      background: #1E5AA8;
-      color: white;
-      font-family: inherit;
-      font-size: 16px;
-      font-weight: 700;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-    .btn-submit:hover { background: #174d96; }
-    .btn-submit:active { transform: scale(0.98); }
-    .btn-submit:disabled { background: #8B9BAE; cursor: not-allowed; }
+/* ── MOBILE ── */
+@media (max-width: 900px) {
+  nav { padding: 8px 16px 0; }
+  .nav-links { display: none; }
+  .nav-bottom { gap: 8px; padding: 6px 0; flex-wrap: nowrap; align-items: center; }
+  .nav-divider { display: none; }
+  .nav-cta {
+    flex: 1; min-width: 0; font-size: 13px; padding: 10px 14px;
+    width: auto; max-width: none; align-self: center; min-height: 44px;
+    display: inline-flex; align-items: center; justify-content: center; text-align: center;
+  }
+  .hamburger-btn, .a11y-nav-btn { display: flex; flex-shrink: 0; width: 44px; height: 44px; }
+}
 
-    /* ── Validation / Success / Error ── */
-    .msg {
-      display: none;
-      border-radius: 10px;
-      padding: 14px 16px;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 1.5;
-      margin-top: 16px;
-    }
-    .msg.error-msg { background: #FFF0F0; border: 1px solid #F5BCBC; color: #B33030; }
-    .msg.success-msg {
-      background: #EDF8ED;
-      border: 1px solid #8FCB8F;
-      color: #1B6B1B;
-      text-align: center;
-      padding: 24px;
-    }
+/* ── NAV OVERLAY ── */
+.nav-overlay {
+  display: none; position: fixed; inset: 0; z-index: 98;
+  background: rgba(13,30,58,0.5);
+  backdrop-filter: blur(2px);
+}
+.nav-overlay.is-open { display: block; }
 
-    /* ── Trust strip ── */
-    .trust {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      justify-content: center;
-      margin-top: 28px;
-      padding-top: 24px;
-      border-top: 1px solid #E2E8F0;
-    }
-    .trust-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      color: #8B9BAE;
-    }
+/* ── NAV DRAWER ── */
+.nav-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 99;
+  width: min(320px, 88vw);
+  background: white;
+  box-shadow: -8px 0 40px rgba(13,30,58,0.18);
+  transform: translateX(100%);
+  transition: transform 0.32s cubic-bezier(0.4,0,0.2,1);
+  display: flex; flex-direction: column;
+  overflow-y: auto;
+}
+.nav-drawer.is-open { transform: translateX(0); }
+.drawer-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--grey-mid);
+  flex-shrink: 0;
+}
+.drawer-logo-wrap img { height: 32px; width: auto; object-fit: contain; }
+.drawer-close-btn {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: var(--grey-light);
+  border: none; cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+}
+.drawer-links {
+  list-style: none;
+  padding: 20px 20px 0;
+  flex-shrink: 0;
+}
+.drawer-links li { border-bottom: 1px solid var(--grey-light); }
+.drawer-links a {
+  display: block; padding: 14px 4px;
+  font-size: 15px; font-weight: 500;
+  color: var(--text); text-decoration: none;
+  transition: color 0.2s;
+}
+.drawer-links a:hover, .drawer-links a.active { color: var(--blue); }
+.drawer-sep { height: 1px; background: var(--grey-mid); margin: 16px 20px; flex-shrink: 0; }
+.drawer-ctas {
+  padding: 0 20px 28px;
+  display: flex; flex-direction: column; gap: 10px;
+  flex-shrink: 0;
+}
+.drawer-cta-book {
+  display: block; text-align: center;
+  background: var(--navy); color: white;
+  padding: 14px 20px; border-radius: 10px;
+  font-weight: 700; font-size: 14px; text-decoration: none;
+  transition: background 0.2s;
+}
+.drawer-cta-book:hover { background: #1a3a6e; }
 
-    /* ── Footer ── */
-    footer {
-      text-align: center;
-      padding: 20px 16px 28px;
-      font-size: 12px;
-      color: #8B9BAE;
-      line-height: 1.6;
-    }
-    footer a { color: #1E5AA8; text-decoration: none; }
+/* ── PAGE BODY PADDING (for fixed nav + announce bar) ── */
+.page-body { padding-top: 112px; }
 
-    @media (max-width: 420px) {
-      .card { padding: 28px 18px; }
-      .topics-grid { grid-template-columns: 1fr; }
-      .hero { padding: 40px 20px 36px; }
-    }
-  </style>
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #0D1E3A 0%, #1a3a6e 50%, #1E5AA8 100%);
+  color: white;
+  text-align: center;
+  padding: 64px 24px 56px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(58,123,221,0.35) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 20px;
+  font-size: 11px; font-weight: 700; letter-spacing: 1.1px;
+  text-transform: uppercase; color: rgba(255,255,255,0.9);
+  padding: 5px 14px; margin-bottom: 22px;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(28px, 6vw, 44px);
+  font-weight: 400;
+  line-height: 1.15;
+  max-width: 540px;
+  margin: 0 auto 16px;
+}
+.hero h1 em { font-style: italic; color: #7DB8F5; }
+.hero p {
+  font-size: 16px; color: rgba(255,255,255,0.75);
+  max-width: 440px; margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ── MAIN SECTION ── */
+.main-section {
+  background: var(--grey-light);
+  padding: 48px 16px 72px;
+  display: flex; flex-direction: column; align-items: center;
+}
+
+/* ── FORM CARD ── */
+.card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  width: 100%; max-width: 540px;
+  padding: 40px 36px;
+}
+
+.step-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 1.4px;
+  text-transform: uppercase; color: var(--grey);
+  margin-bottom: 16px;
+}
+
+/* ── TOPIC GRID ── */
+.topics-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px; margin-bottom: 28px;
+}
+.topic-opt { position: relative; }
+.topic-opt input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
+.topic-lbl {
+  display: flex; flex-direction: column; gap: 5px;
+  padding: 14px 16px;
+  border: 2px solid var(--grey-mid);
+  border-radius: 12px; cursor: pointer;
+  transition: border-color 0.18s, background 0.18s;
+  min-height: 86px;
+}
+.topic-lbl:hover { border-color: var(--blue); background: #F5F9FF; }
+.topic-opt input:checked + .topic-lbl {
+  border-color: #1E5AA8; background: #EEF4FF;
+}
+.topic-icon { font-size: 20px; line-height: 1; }
+.topic-name { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.3; }
+.topic-desc { font-size: 11px; color: var(--grey); line-height: 1.4; }
+.topic-opt input:checked + .topic-lbl .topic-name { color: #1E5AA8; }
+.topic-check {
+  display: none;
+  position: absolute; top: 10px; right: 10px;
+  width: 18px; height: 18px;
+  background: #1E5AA8; border-radius: 50%;
+}
+.topic-check::after {
+  content: '';
+  position: absolute; top: 4px; left: 5px;
+  width: 8px; height: 5px;
+  border-left: 2px solid white; border-bottom: 2px solid white;
+  transform: rotate(-45deg);
+}
+.topic-opt input:checked + .topic-lbl .topic-check { display: block; }
+
+/* ── FIELDS ── */
+.field-group { margin-bottom: 20px; }
+.field-label {
+  display: block; font-size: 13px; font-weight: 600;
+  color: var(--text-muted); margin-bottom: 8px;
+}
+.field-optional { font-weight: 400; color: var(--grey); font-size: 12px; }
+.field-input {
+  width: 100%; padding: 13px 16px;
+  font-family: inherit; font-size: 15px;
+  color: var(--text);
+  background: var(--grey-light);
+  border: 2px solid var(--grey-mid);
+  border-radius: 10px; outline: none;
+  transition: border-color 0.18s, background 0.18s;
+}
+.field-input:focus { border-color: #1E5AA8; background: white; }
+.field-input.err { border-color: #DC2626; }
+
+/* ── SUBMIT ── */
+.btn-submit {
+  width: 100%; padding: 15px;
+  background: var(--navy); color: white;
+  font-family: inherit; font-size: 16px; font-weight: 700;
+  border: none; border-radius: 10px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background 0.2s, transform 0.1s;
+}
+.btn-submit:hover { background: #1a3a6e; }
+.btn-submit:active { transform: scale(0.98); }
+.btn-submit:disabled { background: var(--grey); cursor: not-allowed; }
+
+/* ── MESSAGES ── */
+.msg {
+  display: none; border-radius: 10px;
+  padding: 14px 16px; font-size: 14px; font-weight: 500;
+  line-height: 1.5; margin-top: 16px;
+}
+.msg-error { background: #FFF0F0; border: 1px solid #F5BCBC; color: #B33030; }
+.msg-success {
+  background: #EDF8ED; border: 1px solid #8FCB8F; color: #1B6B1B;
+  text-align: center; padding: 28px 20px;
+}
+
+/* ── TRUST STRIP ── */
+.trust {
+  display: flex; flex-wrap: wrap; gap: 16px;
+  justify-content: center;
+  margin-top: 28px; padding-top: 24px;
+  border-top: 1px solid var(--grey-mid);
+}
+.trust-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--grey);
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.65);
+  text-align: center;
+  padding: 28px 24px;
+  font-size: 13px; line-height: 1.7;
+}
+footer a { color: #7DB8F5; text-decoration: none; }
+footer a:hover { color: white; }
+footer strong { color: rgba(255,255,255,0.9); }
+
+/* ── FLOATING SMS ── */
+@keyframes floatBtn { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+.sticky-sms {
+  position: fixed; bottom: 24px; right: 20px; z-index: 500;
+  height: 52px; padding: 0 18px 0 14px; border-radius: 12px;
+  background: #fff; color: #3A7BDD;
+  border: 2px solid #3A7BDD;
+  display: flex; align-items: center; gap: 9px;
+  box-shadow: 0 4px 16px rgba(58,123,221,0.18);
+  text-decoration: none; white-space: nowrap;
+  animation: floatBtn 3s ease-in-out infinite;
+  transition: background 0.2s, color 0.2s;
+}
+.sticky-sms:hover { background: #3A7BDD; color: white; }
+.sticky-sms-label { font-family: 'DM Sans',sans-serif; font-size: 14px; font-weight: 600; }
+
+@media (max-width: 420px) {
+  .card { padding: 28px 18px; }
+  .topics-grid { grid-template-columns: 1fr; }
+  .hero { padding: 48px 20px 40px; }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
 </head>
 <body>
 
-  <header>
-    <a class="header-logo" href="https://dror75p-ops.github.io/Doryangel-preventive-maintenance-schedule.automation/" aria-label="DoryAngel Automation tools">
-      <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="40" height="40" rx="8" fill="#1E5AA8"/>
-        <path d="M20 8C13.373 8 8 13.373 8 20s5.373 12 12 12 12-5.373 12-12S26.627 8 20 8zm0 4a8 8 0 1 1 0 16A8 8 0 0 1 20 12zm0 3a5 5 0 1 0 0 10A5 5 0 0 0 20 15z" fill="white" opacity="0.9"/>
-      </svg>
-    </a>
-    <div class="header-divider"></div>
-    <span class="header-tag">DoryAngel Digest</span>
-  </header>
+<!-- ANNOUNCE BAR -->
+<div class="announce-bar">
+  <strong>DoryAngel</strong> &mdash; Flat-Fee NYC Property Management from $99/mo &nbsp;
+  <a href="https://doryangel.com/" target="_blank" rel="noopener">Learn More &rarr;</a>
+</div>
 
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="https://doryangel.com/" class="nav-logo" id="navLogo">
+    <img src="https://dror75p-ops.github.io/Doryangel-web-3-carousel-blog/assets/logo.jpg" alt="DoryAngel">
+  </a>
+  <div class="nav-bottom">
+    <ul class="nav-links">
+      <li><a href="https://doryangel.com/#services">Services</a></li>
+      <li><a href="https://doryangel.com/#pricing">Pricing</a></li>
+      <li><a href="https://doryangel.com/#blog">Blog</a></li>
+      <li><a href="https://doryangel.com/#tools">Tools</a></li>
+      <li><a href="https://doryangel.com/#contact">Contact</a></li>
+    </ul>
+    <div class="nav-divider"></div>
+    <button class="a11y-nav-btn" aria-label="Accessibility options" onclick="var uw=document.getElementById('userwayAccessibilityIcon');if(uw)uw.click();">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+        <circle cx="12" cy="4" r="2.2"/>
+        <path d="M15.5 8.5h-7a.5.5 0 0 0-.45.72l2.2 4.78H8a1 1 0 0 0 0 2h2.5l.5 4h-1a1 1 0 0 0 0 2h4a1 1 0 0 0 0-2h-1l.5-4H16a1 1 0 0 0 0-2h-2.25l2.2-4.78A.5.5 0 0 0 15.5 8.5z"/>
+      </svg>
+    </button>
+    <a href="https://cal.com/dory-angel-management-v5o0ke/30min" target="_blank" class="nav-cta">Book Free Consultation</a>
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navDrawer">
+      <svg width="22" height="16" viewBox="0 0 22 16" fill="none" aria-hidden="true">
+        <rect y="0" width="22" height="2.5" rx="1.25" fill="white"/>
+        <rect y="6.75" width="22" height="2.5" rx="1.25" fill="white"/>
+        <rect y="13.5" width="22" height="2.5" rx="1.25" fill="white"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- NAV OVERLAY -->
+<div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
+
+<!-- NAV DRAWER -->
+<div class="nav-drawer" id="navDrawer" role="dialog" aria-label="Navigation menu" aria-modal="true">
+  <div class="drawer-header">
+    <div class="drawer-logo-wrap">
+      <img src="https://dror75p-ops.github.io/Doryangel-web-3-carousel-blog/assets/logo.jpg" alt="DoryAngel">
+    </div>
+    <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Close menu">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <line x1="2" y1="2" x2="16" y2="16" stroke="#232323" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="16" y1="2" x2="2" y2="16" stroke="#232323" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+  <ul class="drawer-links">
+    <li><a href="https://doryangel.com/#services">Services</a></li>
+    <li><a href="https://doryangel.com/#pricing">Pricing</a></li>
+    <li><a href="https://doryangel.com/#blog">Blog</a></li>
+    <li><a href="https://doryangel.com/#tools">Tools</a></li>
+    <li><a href="https://doryangel.com/#contact">Contact</a></li>
+    <li><a href="." style="color:#1E5AA8;font-weight:700;">DoryAngel Digest ✉</a></li>
+  </ul>
+  <div class="drawer-sep"></div>
+  <div class="drawer-ctas">
+    <a href="https://cal.com/dory-angel-management-v5o0ke/30min" target="_blank" class="drawer-cta-book">Book Free Consultation</a>
+  </div>
+</div>
+
+<!-- PAGE BODY -->
+<div class="page-body">
+
+  <!-- HERO -->
   <div class="hero">
-    <div class="hero-badge">Free Newsletter</div>
-    <h1>Stay ahead as a NYC landlord</h1>
+    <div class="hero-badge">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Free Newsletter
+    </div>
+    <h1>Stay ahead as a<br><em>NYC landlord</em></h1>
     <p>Get notified the moment we publish articles that match your interests — no noise, just what matters to you.</p>
   </div>
 
-  <main>
+  <!-- FORM -->
+  <div class="main-section">
     <div class="card">
 
-      <!-- Success state (hidden until submit) -->
-      <div class="msg success-msg" id="successMsg">
-        <div style="font-size:32px;margin-bottom:10px">🎉</div>
-        <strong style="font-size:17px;display:block;margin-bottom:6px">You're in!</strong>
-        Check your inbox for a confirmation email. We'll reach out the next time we publish something matching your topics.
+      <!-- Success message (hidden until submit) -->
+      <div class="msg msg-success" id="successMsg">
+        <div style="font-size:36px;margin-bottom:12px">🎉</div>
+        <strong style="font-size:18px;display:block;margin-bottom:8px;color:#1B6B1B">You're subscribed!</strong>
+        Check your inbox for a confirmation email. We'll reach out whenever we publish something that matches your topics.
       </div>
 
-      <!-- Form (hidden after submit) -->
+      <!-- FORM (hidden after success) -->
       <form id="digestForm" novalidate>
 
-        <p class="section-label">1 — Pick your topics</p>
-
+        <p class="step-label">Step 1 — Pick your topics</p>
         <div class="topics-grid">
-          <div class="topic-option">
+          <div class="topic-opt">
             <input type="checkbox" id="t1" name="topics" value="property-management">
-            <label class="topic-label" for="t1">
+            <label class="topic-lbl" for="t1">
               <span class="topic-check"></span>
               <span class="topic-icon">🏢</span>
               <span class="topic-name">Property Management</span>
-              <span class="topic-desc">Landlord tips, HPD rules, rent collection</span>
+              <span class="topic-desc">HPD rules, rent collection, compliance</span>
             </label>
           </div>
-          <div class="topic-option">
+          <div class="topic-opt">
             <input type="checkbox" id="t2" name="topics" value="diy-property-management">
-            <label class="topic-label" for="t2">
+            <label class="topic-lbl" for="t2">
               <span class="topic-check"></span>
               <span class="topic-icon">🔧</span>
               <span class="topic-name">DIY Landlord</span>
-              <span class="topic-desc">Self-manage, handle tenants, save costs</span>
+              <span class="topic-desc">Self-manage, handle tenants, cut costs</span>
             </label>
           </div>
-          <div class="topic-option">
+          <div class="topic-opt">
             <input type="checkbox" id="t3" name="topics" value="investments">
-            <label class="topic-label" for="t3">
+            <label class="topic-lbl" for="t3">
               <span class="topic-check"></span>
               <span class="topic-icon">📈</span>
               <span class="topic-name">Investments</span>
-              <span class="topic-desc">NYC market, ROI, buy vs. sell decisions</span>
+              <span class="topic-desc">NYC market, ROI, buy vs. sell</span>
             </label>
           </div>
-          <div class="topic-option">
-            <input type="checkbox" id="t4" name="topics" value="property-management,diy-property-management,investments" data-all="true">
-            <label class="topic-label" for="t4">
+          <div class="topic-opt">
+            <input type="checkbox" id="t4" name="topics" value="all" data-all="true">
+            <label class="topic-lbl" for="t4">
               <span class="topic-check"></span>
               <span class="topic-icon">✨</span>
               <span class="topic-name">All Topics</span>
@@ -358,123 +536,282 @@
           </div>
         </div>
 
-        <p class="section-label">2 — Your email</p>
+        <p class="step-label">Step 2 — Your property address <span style="text-transform:none;letter-spacing:0;font-size:11px;color:var(--grey);font-weight:400">(optional)</span></p>
+        <div class="field-group">
+          <input type="text" id="addressInput" class="field-input"
+            placeholder="e.g. 123 Grand Concourse, Bronx, NY 10451"
+            autocomplete="street-address">
+        </div>
 
-        <div class="email-group">
-          <label class="field-label" for="emailInput">Email address</label>
-          <input type="email" id="emailInput" name="email" placeholder="you@example.com" autocomplete="email">
+        <p class="step-label">Step 3 — Your email</p>
+        <div class="field-group">
+          <input type="email" id="emailInput" class="field-input"
+            placeholder="you@example.com"
+            autocomplete="email">
         </div>
 
         <button type="submit" class="btn-submit" id="submitBtn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .99h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
-          </svg>
-          Subscribe — it's free
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Subscribe — it&rsquo;s free
         </button>
 
-        <div class="msg error-msg" id="errorMsg"></div>
+        <div class="msg msg-error" id="errorMsg"></div>
 
         <div class="trust">
           <span class="trust-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B9BAE" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--grey)" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             No spam, ever
           </span>
           <span class="trust-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B9BAE" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--grey)" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
             Unsubscribe anytime
           </span>
           <span class="trust-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B9BAE" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--grey)" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             Only when relevant posts publish
           </span>
         </div>
 
       </form>
     </div>
-  </main>
+  </div>
 
+  <!-- FOOTER -->
   <footer>
-    <strong>DoryAngel LLC</strong> · 557 Grand Concourse Ave #4123, Bronx, NY 10451<br>
-    <a href="mailto:office@doryangel.com">office@doryangel.com</a> ·
-    <a href="https://dror75p-ops.github.io/Doryangel-preventive-maintenance-schedule.automation/">Back to tools</a>
+    <strong>DoryAngel LLC</strong> &nbsp;&middot;&nbsp;
+    557 Grand Concourse Ave #4123, Bronx, NY 10451<br>
+    <a href="mailto:office@doryangel.com">office@doryangel.com</a> &nbsp;&middot;&nbsp;
+    <a href="tel:+15168474999">(516) 847-4999</a> &nbsp;&middot;&nbsp;
+    <a href="https://doryangel.com/">doryangel.com</a>
   </footer>
 
-  <script>
-    var WEBHOOK = 'https://hook.eu1.make.com/2qo6r1tr15cckv1opo8em9x89ip3ku4x';
-    var form = document.getElementById('digestForm');
-    var emailInput = document.getElementById('emailInput');
-    var errorMsg = document.getElementById('errorMsg');
-    var successMsg = document.getElementById('successMsg');
-    var submitBtn = document.getElementById('submitBtn');
+</div><!-- /.page-body -->
 
-    // "All Topics" checkbox logic
-    document.getElementById('t4').addEventListener('change', function () {
-      if (this.checked) {
-        ['t1','t2','t3'].forEach(function(id){ document.getElementById(id).checked = false; });
-      }
+<!-- FLOATING SMS -->
+<a href="sms:+15168474999" class="sticky-sms" aria-label="Text DoryAngel (516) 847-4999">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="22" height="22" aria-hidden="true" style="flex-shrink:0">
+    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+  </svg>
+  <span class="sticky-sms-label">Chat with us</span>
+</a>
+
+<!-- USERWAY ACCESSIBILITY WIDGET -->
+<script>
+(function(d){
+  var s = d.createElement("script");
+  s.setAttribute("data-account", "lKWv8TGXed");
+  s.setAttribute("data-position", "2");
+  s.setAttribute("data-size", "small");
+  s.setAttribute("data-color", "#3A7BDD");
+  s.setAttribute("data-mobile", true);
+  s.setAttribute("src", "https://cdn.userway.org/widget.js");
+  (d.body || d.head).appendChild(s);
+})(document);
+</script>
+<style>#userwayAccessibilityIcon{position:fixed!important;left:-9999px!important;top:-9999px!important;}</style>
+
+<!-- NAV DRAWER JS -->
+<script>
+(function () {
+  var hamBtn   = document.getElementById('hamburgerBtn');
+  var closeBtn = document.getElementById('drawerCloseBtn');
+  var overlay  = document.getElementById('navOverlay');
+  var drawer   = document.getElementById('navDrawer');
+  var nav      = document.getElementById('mainNav');
+
+  function openDrawer() {
+    drawer.classList.add('is-open');
+    overlay.classList.add('is-open');
+    hamBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    drawer.classList.remove('is-open');
+    overlay.classList.remove('is-open');
+    hamBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  hamBtn.addEventListener('click', openDrawer);
+  closeBtn.addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+
+  // Hide announce bar on scroll
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 40) nav.classList.add('bar-hidden');
+    else nav.classList.remove('bar-hidden');
+  }, { passive: true });
+})();
+</script>
+
+<!-- LOGO + HAMBURGER PROMO FLIP -->
+<script>
+(function () {
+  var logoLink = document.getElementById('navLogo');
+  var hamBtn   = document.getElementById('hamburgerBtn');
+  if (!logoLink || !hamBtn) return;
+
+  var PROMO_URL = 'https://doryangel.com/';
+  var PROMOS = [
+    'Back to DoryAngel.com',
+    'Free Compliance Calendar',
+    'NYC Property Management'
+  ];
+
+  var origLogoHTML = logoLink.innerHTML;
+  var origHref     = logoLink.getAttribute('href');
+  var origHamHTML  = hamBtn.innerHTML;
+  var origHamLabel = hamBtn.getAttribute('aria-label');
+
+  var promoIdx = 0, isFlipped = false;
+  var HALF = 360, SHOW = 5500;
+
+  var overlay2 = document.createElement('a');
+  overlay2.href = PROMO_URL;
+  overlay2.rel  = 'noopener noreferrer';
+  overlay2.style.cssText = 'position:absolute;inset:0;border-radius:8px;z-index:5;display:none;cursor:pointer';
+  overlay2.addEventListener('click', function (e) { e.stopPropagation(); });
+  hamBtn.style.position = 'relative';
+  hamBtn.appendChild(overlay2);
+
+  function scaleSwap(el, newHTML, afterFn) {
+    el.style.transformOrigin = 'center';
+    el.style.transition = 'transform ' + HALF + 'ms cubic-bezier(0.4,0,1,1)';
+    el.style.transform = 'scaleX(0)';
+    setTimeout(function () {
+      el.innerHTML = newHTML;
+      if (afterFn) afterFn();
+      el.style.transition = 'transform ' + HALF + 'ms cubic-bezier(0,0,0.6,1)';
+      el.style.transform = 'scaleX(1)';
+    }, HALF + 10);
+  }
+
+  function promoLogoHTML(msg) {
+    return '<span style="display:inline-flex;align-items:center;gap:8px;font-family:\'DM Sans\',sans-serif;' +
+      'font-size:13px;font-weight:700;color:#3A7BDD;white-space:nowrap;letter-spacing:0.01em;line-height:1">' +
+      '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="flex-shrink:0">' +
+      '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>' +
+      msg + ' →</span>';
+  }
+
+  var arrowSVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" ' +
+    'stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+  function showPromo() {
+    if (isFlipped) return;
+    isFlipped = true;
+    var msg = PROMOS[promoIdx++ % PROMOS.length];
+
+    scaleSwap(logoLink, promoLogoHTML(msg), function () {
+      logoLink.href   = PROMO_URL;
+      logoLink.target = '_blank';
+      logoLink.rel    = 'noopener noreferrer';
     });
-    ['t1','t2','t3'].forEach(function(id){
-      document.getElementById(id).addEventListener('change', function(){
-        if (this.checked) document.getElementById('t4').checked = false;
-      });
+    scaleSwap(hamBtn, arrowSVG, function () {
+      hamBtn.appendChild(overlay2);
+      overlay2.style.display = 'block';
+      hamBtn.setAttribute('aria-label', 'Visit DoryAngel.com');
     });
 
-    function getSelectedTopics() {
-      var allCheckbox = document.getElementById('t4');
-      if (allCheckbox.checked) return ['property-management','diy-property-management','investments'];
-      var checked = [];
-      document.querySelectorAll('input[name="topics"]:checked:not([data-all])').forEach(function(cb){
-        checked.push(cb.value);
+    setTimeout(function () {
+      scaleSwap(logoLink, origLogoHTML, function () {
+        logoLink.href = origHref;
+        logoLink.removeAttribute('target');
+        logoLink.removeAttribute('rel');
       });
-      return checked;
+      scaleSwap(hamBtn, origHamHTML, function () {
+        overlay2.style.display = 'none';
+        hamBtn.appendChild(overlay2);
+        hamBtn.setAttribute('aria-label', origHamLabel);
+      });
+      setTimeout(function () { isFlipped = false; }, HALF * 2 + 100);
+    }, SHOW);
+  }
+
+  setTimeout(function () {
+    showPromo();
+    setInterval(showPromo, 22000);
+  }, 8000);
+})();
+</script>
+
+<!-- FORM JS -->
+<script>
+(function () {
+  var WEBHOOK = 'https://hook.eu1.make.com/2qo6r1tr15cckv1opo8em9x89ip3ku4x';
+  var form      = document.getElementById('digestForm');
+  var emailEl   = document.getElementById('emailInput');
+  var addressEl = document.getElementById('addressInput');
+  var errorEl   = document.getElementById('errorMsg');
+  var successEl = document.getElementById('successMsg');
+  var submitBtn = document.getElementById('submitBtn');
+
+  // "All Topics" logic
+  document.getElementById('t4').addEventListener('change', function () {
+    if (this.checked) ['t1','t2','t3'].forEach(function(id){ document.getElementById(id).checked = false; });
+  });
+  ['t1','t2','t3'].forEach(function(id){
+    document.getElementById(id).addEventListener('change', function(){
+      if (this.checked) document.getElementById('t4').checked = false;
+    });
+  });
+
+  function getTopics() {
+    if (document.getElementById('t4').checked) return ['property-management','diy-property-management','investments'];
+    var out = [];
+    document.querySelectorAll('input[name="topics"]:checked:not([data-all])').forEach(function(cb){ out.push(cb.value); });
+    return out;
+  }
+
+  function showErr(msg) { errorEl.textContent = msg; errorEl.style.display = 'block'; }
+  function hideErr()    { errorEl.style.display = 'none'; }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    hideErr();
+
+    var email   = emailEl.value.trim();
+    var address = addressEl.value.trim();
+    var topics  = getTopics();
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      emailEl.classList.add('err');
+      showErr('Please enter a valid email address.');
+      emailEl.focus();
+      return;
+    }
+    emailEl.classList.remove('err');
+
+    if (topics.length === 0) {
+      showErr('Please select at least one topic.');
+      return;
     }
 
-    function showError(msg) {
-      errorMsg.textContent = msg;
-      errorMsg.style.display = 'block';
-    }
-    function hideError() { errorMsg.style.display = 'none'; }
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin .9s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Subscribing…';
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      hideError();
+    var payload = { email: email, topics: topics };
+    if (address) payload.address = address;
 
-      var email = emailInput.value.trim();
-      var topics = getSelectedTopics();
-
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        emailInput.classList.add('error');
-        showError('Please enter a valid email address.');
-        emailInput.focus();
-        return;
-      }
-      emailInput.classList.remove('error');
-
-      if (topics.length === 0) {
-        showError('Please select at least one topic to subscribe to.');
-        return;
-      }
-
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin 0.9s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Subscribing…';
-
-      fetch(WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email, topics: topics })
-      })
-      .then(function (res) {
-        if (!res.ok) throw new Error('Server error ' + res.status);
-        form.style.display = 'none';
-        successMsg.style.display = 'block';
-      })
-      .catch(function (err) {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .99h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> Subscribe — it\'s free';
-        showError('Something went wrong. Please try again in a moment.');
-      });
+    fetch(WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function (res) {
+      if (!res.ok) throw new Error('Server error ' + res.status);
+      form.style.display = 'none';
+      successEl.style.display = 'block';
+    })
+    .catch(function () {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Subscribe — it\'s free';
+      showErr('Something went wrong. Please try again in a moment.');
     });
-  </script>
-  <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+  });
+})();
+</script>
+
 </body>
 </html>
